@@ -17,29 +17,23 @@ public class PlayerMovement : NetworkBehaviour
     {
         if (!isLocalPlayer)
         {
-            return;
+            this.enabled = false;
         }
         velocity = Vector2.zero;
     }
 
     void Update()
     {
-        if (!isLocalPlayer)
-        {
-            return;
-        }
-
         Accelerate();
         Move();
     }
 
-
     void Accelerate()
     {
         Vector2 direction = new Vector2(
-            Input.GetAxis("Horizontal"),
-            Input.GetAxis("Vertical")
-        );
+            Input.GetAxisRaw("Horizontal"),
+            Input.GetAxisRaw("Vertical")
+        ).normalized;
 
         velocity = Vector2.Lerp(
             direction * speed,
