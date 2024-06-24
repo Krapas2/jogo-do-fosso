@@ -12,8 +12,10 @@ public class ProtoRanged : PlayerRanged
 
     private CameraData cameraData;
 
-    void Start()
+    protected override void Start()
     {
+        base.Start();
+
         player = GetComponent<Player>();
 
         cameraData = FindObjectOfType<CameraData>();
