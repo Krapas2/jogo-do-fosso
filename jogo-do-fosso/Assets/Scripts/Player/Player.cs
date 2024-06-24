@@ -7,9 +7,7 @@ public class Player : NetworkBehaviour
 {
     [SyncVar]
     public float maxHealth;
-
     [SyncVar]
-    //[HideInInspector]
     public float currentHealth;
 
     private PlayerMovement playerMovement;
@@ -18,10 +16,8 @@ public class Player : NetworkBehaviour
     void Start()
     {
         currentHealth = maxHealth;
-        if (isLocalPlayer){
+        if (isLocalPlayer) {
             SetupLocalPlayer();
-        } else {
-            DisableNonLocalPlayer();
         }
     }
 
@@ -33,16 +29,6 @@ public class Player : NetworkBehaviour
         }
     }
 
-    void DisableNonLocalPlayer() 
-    {
-        if(TryGetComponent<PlayerMovement>(out playerMovement)){
-            playerMovement.enabled = false;
-        }
-        if(TryGetComponent<PlayerRanged>(out playerRanged)){
-            playerRanged.enabled = false;
-        }
-    }
-    
     [ServerCallback]
     public void TakeDamage(float damage)
     {

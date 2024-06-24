@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
+[RequireComponent(typeof(Rigidbody2D))]
 public class PlayerMovement : NetworkBehaviour
 {
 
     public float speed = 5f;
     public float acceleration = .1f;
 
-    [SyncVar]
-    [HideInInspector]
-    public Vector2 velocity;
+    private Rigidbody2D rb;
 
     void Start()
     {
@@ -19,13 +18,13 @@ public class PlayerMovement : NetworkBehaviour
         {
             this.enabled = false;
         }
-        velocity = Vector2.zero;
+
+        rb = GetComponent<Rigidbody2D>();
     }
 
     void Update()
     {
         Accelerate();
-        Move();
     }
 
     void Accelerate()
@@ -35,16 +34,10 @@ public class PlayerMovement : NetworkBehaviour
             Input.GetAxisRaw("Vertical")
         ).normalized;
 
-        velocity = Vector2.Lerp(
+        rb.velocity = Vector2.Lerp(
             direction * speed,
-            velocity,
+            rb.velocity,
             Mathf.Pow(.5f, acceleration * Time.deltaTime)
         );
-    }
-
-    void Move()
-    {
-        Vector3 translation = velocity * Time.deltaTime;
-        transform.Translate(translation);
     }
 }
