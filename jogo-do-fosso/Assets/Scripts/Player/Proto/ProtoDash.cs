@@ -41,7 +41,10 @@ public class ProtoDash : PlayerDash
 
     void Dash()
     {
-        rb.velocity = (cameraData.worldMousePosition - transform.position.Vector2()).normalized * speedBoost;
+        bool running = rb.velocity.magnitude > 1f;
+        Vector2 runDirection = rb.velocity;
+        Vector2 lookDirection = cameraData.worldMousePosition - transform.position.Vector2();
+        rb.velocity += (running ? runDirection : lookDirection).normalized * speedBoost;
     }
 
     IEnumerator Cooldown()
