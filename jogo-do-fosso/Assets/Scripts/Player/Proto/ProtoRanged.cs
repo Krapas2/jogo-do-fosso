@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
-public class ProtoRanged : PlayerRanged
+public class ProtoRanged : PlayerSkill
 {
     public ProtoProjectile projectilePrefab;
     public Transform projectileOrigin;

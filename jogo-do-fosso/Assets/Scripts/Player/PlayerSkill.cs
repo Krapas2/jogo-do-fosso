@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
-public abstract class PlayerRanged : NetworkBehaviour {
-	
+public class PlayerSkill : NetworkBehaviour
+{
     protected virtual void Start()
     {
-        if (!isLocalPlayer) {
+        if (!isLocalPlayer){
             this.enabled = false;
         }
-	}
+    }
 }
