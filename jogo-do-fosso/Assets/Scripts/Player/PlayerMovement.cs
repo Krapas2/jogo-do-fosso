@@ -4,7 +4,7 @@ using UnityEngine;
 using Mirror;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class PlayerMovement : NetworkBehaviour
+public class PlayerMovement : PlayerSkill
 {
 
     public float speed = 5f;
@@ -12,12 +12,9 @@ public class PlayerMovement : NetworkBehaviour
 
     private Rigidbody2D rb;
 
-    void Start()
+    protected override void Start()
     {
-        if (!isLocalPlayer)
-        {
-            this.enabled = false;
-        }
+        base.Start();
 
         rb = GetComponent<Rigidbody2D>();
     }

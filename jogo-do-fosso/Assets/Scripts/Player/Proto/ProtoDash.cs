@@ -4,7 +4,7 @@ using UnityEngine;
 using Mirror;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class ProtoDash : PlayerDash
+public class ProtoDash : PlayerSkill
 {
     public float speedBoost;
     public float dashLength;

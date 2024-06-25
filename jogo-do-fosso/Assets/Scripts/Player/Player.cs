@@ -10,9 +10,6 @@ public class Player : NetworkBehaviour
     [SyncVar]
     public float currentHealth;
 
-    private PlayerMovement playerMovement;
-    private PlayerRanged playerRanged;
-
     void Start()
     {
         currentHealth = maxHealth;
