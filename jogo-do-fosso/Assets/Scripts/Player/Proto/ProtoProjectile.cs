@@ -4,7 +4,7 @@ using UnityEngine;
 using Mirror;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class ProtoProjectile : Projectile
+public class ProtoProjectile : NetworkBehaviour
 {
     [SyncVar]
     public float damage;

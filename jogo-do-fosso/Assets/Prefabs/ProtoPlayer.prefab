@@ -67,6 +67,37 @@ MonoBehaviour:
   positionSensitivity: 0.01
   rotationSensitivity: 0.01
   scaleSensitivity: 0.01
+--- !u!1 &2438200701812142336
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1316058130428274187}
+  m_Layer: 3
+  m_Name: SpecialProjectileOrigin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1316058130428274187
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2438200701812142336}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5193978321166781775}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2508539694822755491
 GameObject:
   m_ObjectHideFlags: 0
@@ -405,6 +436,7 @@ GameObject:
   - component: {fileID: 3693093015806852811}
   - component: {fileID: 6770122621111299099}
   - component: {fileID: 7179803912739190303}
+  - component: {fileID: 4867834645569797928}
   m_Layer: 3
   m_Name: ProtoPlayer
   m_TagString: Untagged
@@ -428,6 +460,7 @@ Transform:
   - {fileID: 4208821171352405698}
   - {fileID: 8006047875576289082}
   - {fileID: 845264877670774031}
+  - {fileID: 1316058130428274187}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8757584577896222944
@@ -703,3 +736,21 @@ MonoBehaviour:
   punchPivot: {fileID: 845264877670774031}
   punchLength: 0.5
   cooldown: 0.2
+--- !u!114 &4867834645569797928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9085072672143096352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 348d47adbfdb915b28086a159b9080b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  projectilePrefab: {fileID: 8606801259190419750, guid: 11ee5293040dbb630a2b74445d62eca1, type: 3}
+  projectileOrigin: {fileID: 1316058130428274187}
+  cooldown: 0.1
