@@ -11,7 +11,8 @@ public class ProtoSpecialProjectile : NetworkBehaviour
     [SyncVar]
     public float speed;
     [SyncVar]
-    public float turningSpeed;
+    public float acceleration;
+    public LayerMask collide;
 
     [HideInInspector]
     [SyncVar]
@@ -21,28 +22,30 @@ public class ProtoSpecialProjectile : NetworkBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+
+        rb.velocity = transform.up * speed;
     }
 
     void Update()
     {
-        Move();
+        Accelerate();
         Turn();
     }
 
-    void Move()
+    void Accelerate()
     {
-        rb.velocity = transform.up * speed;
+        Vector3 closestPlayerPosition = ClosestPlayerPosition();
+
+        rb.velocity = Vector2.Lerp(
+            (closestPlayerPosition - transform.position) * speed,
+            rb.velocity,
+            Mathf.Pow(.5f, acceleration * Time.deltaTime)
+        );
     }
 
     void Turn()
     {
-        Vector3 closestPlayerPosition = ClosestPlayerPosition();
-
-        if(closestPlayerPosition.magnitude < Mathf.Infinity){
-            Vector3 currentDirection = transform.up;
-            Vector3 desiredDirection = closestPlayerPosition - transform.position;
-            transform.up = Vector3.Lerp(currentDirection, desiredDirection, Time.deltaTime * turningSpeed);
-        }
+        transform.up = rb.velocity.Vector3() + transform.position;
     }
 
     Vector3 ClosestPlayerPosition()
@@ -76,6 +79,14 @@ public class ProtoSpecialProjectile : NetworkBehaviour
 
         otherPlayer.TakeDamage(damage);
         DestroySelf();
+    }
+
+    [ServerCallback]
+    void OnTriggerStay2D(Collider2D other) 
+    {
+        if(collide.Includes(other.gameObject)){
+            DestroySelf();
+        }
     }
 
     [Server]

@@ -13,4 +13,9 @@ public static class ExtensionMethods
     {
         return new Vector3(v.x, v.y, 0f);
     }
+
+    public static bool Includes(this LayerMask layerMask, GameObject gameObject)
+    {
+        return (layerMask & (1 << gameObject.layer)) != 0;
+    }
 }
