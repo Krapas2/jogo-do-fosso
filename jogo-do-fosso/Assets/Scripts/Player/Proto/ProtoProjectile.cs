@@ -4,12 +4,13 @@ using UnityEngine;
 using Mirror;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class ProtoProjectile : Projectile
+public class ProtoProjectile : NetworkBehaviour
 {
     [SyncVar]
     public float damage;
     [SyncVar]
     public float speed;
+    public LayerMask collide;
 
     [HideInInspector]
     public Player owner;
@@ -35,6 +36,14 @@ public class ProtoProjectile : Projectile
 
         otherPlayer.TakeDamage(damage);
         DestroySelf();
+    }
+    
+    [ServerCallback]
+    void OnTriggerStay2D(Collider2D other) 
+    {
+        if(collide.Includes(other.gameObject)){
+            DestroySelf();
+        }
     }
 
     [Server]
