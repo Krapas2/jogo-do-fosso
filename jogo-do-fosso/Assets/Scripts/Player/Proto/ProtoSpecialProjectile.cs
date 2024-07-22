@@ -36,11 +36,13 @@ public class ProtoSpecialProjectile : NetworkBehaviour
     {
         Vector3 closestPlayerPosition = ClosestPlayerPosition();
 
-        rb.velocity = Vector2.Lerp(
-            (closestPlayerPosition - transform.position) * speed,
-            rb.velocity,
-            Mathf.Pow(.5f, acceleration * Time.deltaTime)
-        );
+        if(closestPlayerPosition.magnitude != Mathf.Infinity){
+            rb.velocity = Vector2.Lerp(
+                (closestPlayerPosition - transform.position).normalized * speed,
+                rb.velocity,
+                Mathf.Pow(.5f, acceleration * Time.deltaTime)
+            );
+        }
     }
 
     void Turn()
@@ -54,12 +56,10 @@ public class ProtoSpecialProjectile : NetworkBehaviour
         Vector3 closestPlayerPosition = Vector3.positiveInfinity;
         float mininumDistance = Mathf.Infinity;
 
-        foreach (Player player in players)
-        {
+        foreach (Player player in players){
             float distance = Vector3.Distance(transform.position, player.transform.position);
 
-            if (distance < mininumDistance && player != owner)
-            {
+            if (distance < mininumDistance && player != owner){
                 closestPlayerPosition = player.transform.position;
                 mininumDistance = distance;
             }
@@ -72,8 +72,7 @@ public class ProtoSpecialProjectile : NetworkBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         bool otherIsPlayer = other.gameObject.TryGetComponent<Player>(out Player otherPlayer);
-        if (!otherIsPlayer || otherPlayer == owner)
-        {
+        if (!otherIsPlayer || otherPlayer == owner){
             return;
         }
 
