@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
-public class PlayerAttackManager : PlayerSkill
+public class PlayerAttackManager : NetworkBehaviour
 {
 
     public PlayerSkill[] attacks;
 
-    protected override void Start()
+    void Start()
     {
-        base.Start();
+        if (!isLocalPlayer){
+            this.enabled = false;
+        }
+        
         SelectAttack(0);
     }
 
