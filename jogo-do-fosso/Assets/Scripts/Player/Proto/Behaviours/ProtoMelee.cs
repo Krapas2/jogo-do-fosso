@@ -25,11 +25,13 @@ public class ProtoMelee : PlayerSkill
 
     void Update()
     {
-        Aim();
+        if(canUse){
+            Aim();
 
-        if(Input.GetButtonDown("Fire1") && canUse){
-            StartCoroutine(Punch());
-            StartCoroutine(Cooldown());
+            if(Input.GetButtonDown("Fire1")){
+                StartCoroutine(Punch());
+                StartCoroutine(Cooldown());
+            }
         }
     }
 
