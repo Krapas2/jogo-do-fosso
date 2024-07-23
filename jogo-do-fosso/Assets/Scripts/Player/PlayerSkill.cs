@@ -34,7 +34,9 @@ public class PlayerSkill : NetworkBehaviour
         canUse = false;
         cooldownProgress = 0f;
         while(cooldownProgress < cooldown){
-            cooldownProgress += Time.deltaTime;
+            if(this.enabled){
+                cooldownProgress += Time.deltaTime;
+            }
             yield return null;
         }
         cooldownProgress = cooldown;
