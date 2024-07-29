@@ -13,7 +13,7 @@ public class Player : NetworkBehaviour
     void Start()
     {
         currentHealth = maxHealth;
-        if (isLocalPlayer) {
+        if (isOwned) {
             SetupLocalPlayer();
         }
     }

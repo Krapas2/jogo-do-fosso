@@ -14,7 +14,7 @@ public class PlayerMovement : NetworkBehaviour
 
     void Start()
     {
-        if (!isLocalPlayer){
+        if (!isOwned){
             this.enabled = false;
         }
 
