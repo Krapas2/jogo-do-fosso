@@ -3,21 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
-public class ProtoRanged : PlayerSkill
+public class ProtoSpecial : PlayerSkill
 {
-    public ProtoProjectile projectilePrefab;
+    public ProtoSpecialProjectile projectilePrefab;
     public Transform projectileOrigin;
-    
-    private Player player;
+
+    private Character character;
 
     private CameraData cameraData;
-
 
     protected override void Start()
     {
         base.Start();
-
-        player = GetComponent<Player>();
+        
+        character = GetComponent<Character>();
 
         cameraData = FindObjectOfType<CameraData>();
     }
@@ -26,7 +25,7 @@ public class ProtoRanged : PlayerSkill
     {
         Aim();
 
-        if(Input.GetButtonDown("Fire1") && canUse){
+        if(Input.GetButtonDown("Special") && canUse){
             Fire();
             StartCoroutine(Cooldown());
         }
@@ -40,9 +39,9 @@ public class ProtoRanged : PlayerSkill
     [Command]
     void Fire()
     {
-        ProtoProjectile projectile = Instantiate(projectilePrefab, projectileOrigin.position, projectileOrigin.rotation);
+        ProtoSpecialProjectile projectile = Instantiate(projectilePrefab, projectileOrigin.position, projectileOrigin.rotation);
 
-        projectile.owner = player;
-        NetworkServer.Spawn(projectile.gameObject);
+        projectile.owner = character;
+        NetworkServer.Spawn(projectile.gameObject, connectionToClient);
     }
 }

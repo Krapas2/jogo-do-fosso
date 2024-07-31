@@ -16,7 +16,7 @@ public class ProtoProjectile : NetworkBehaviour
     public LayerMask collide;
 
     [HideInInspector]
-    public Player owner;
+    public Character owner;
     private Rigidbody2D rb;
 
     void Start()
@@ -34,12 +34,12 @@ public class ProtoProjectile : NetworkBehaviour
     [ServerCallback]
     void OnTriggerEnter2D(Collider2D other) 
     {
-        bool otherIsPlayer = other.gameObject.TryGetComponent<Player>(out Player otherPlayer);
-        if(!otherIsPlayer || otherPlayer == owner){
+        bool otherIsCharacter = other.gameObject.TryGetComponent<Character>(out Character otherCharacter);
+        if(!otherIsCharacter || otherCharacter == owner){
             return;
         }
 
-        otherPlayer.TakeDamage(damage);
+        otherCharacter.TakeDamage(damage);
         DestroySelf();
     }
     
@@ -51,7 +51,7 @@ public class ProtoProjectile : NetworkBehaviour
         }
     }
 
-    [Server]
+    [ServerCallback]
     void DestroySelf()
     {
         NetworkServer.Destroy(gameObject);

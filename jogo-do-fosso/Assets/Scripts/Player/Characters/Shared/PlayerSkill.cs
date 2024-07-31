@@ -24,7 +24,7 @@ public class PlayerSkill : NetworkBehaviour
 
     protected virtual void Start()
     {
-        if (!isLocalPlayer){
+        if (!isOwned){
             this.enabled = false;
         }
     }

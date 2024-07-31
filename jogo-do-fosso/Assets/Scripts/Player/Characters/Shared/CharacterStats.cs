@@ -3,27 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
-public class Player : NetworkBehaviour
+public class Character : NetworkBehaviour
 {
     [SyncVar]
     public float maxHealth;
     [SyncVar]
     public float currentHealth;
 
+    [HideInInspector]
+    [SyncVar]
+    public PlayerManager manager;
+
     void Start()
     {
         currentHealth = maxHealth;
-        if (isLocalPlayer) {
+        if (isOwned) {
             SetupLocalPlayer();
         }
     }
 
     void SetupLocalPlayer(){
-        
         CameraController cameraController = FindObjectOfType<CameraController>();
         if(cameraController){
             cameraController.target = transform;
         }
+
+        manager.currentCharacter = this;
     }
 
     [ServerCallback]

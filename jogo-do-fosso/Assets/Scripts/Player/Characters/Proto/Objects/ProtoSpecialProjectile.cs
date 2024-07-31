@@ -16,7 +16,7 @@ public class ProtoSpecialProjectile : NetworkBehaviour
 
     [HideInInspector]
     [SyncVar]
-    public Player owner;
+    public Character owner;
     private Rigidbody2D rb;
 
     void Start()
@@ -52,31 +52,31 @@ public class ProtoSpecialProjectile : NetworkBehaviour
 
     Vector3 ClosestPlayerPosition()
     {
-        Player[] players = FindObjectsOfType<Player>();
-        Vector3 closestPlayerPosition = Vector3.positiveInfinity;
+        Character[] characters = FindObjectsOfType<Character>();
+        Vector3 closestCharacterPosition = Vector3.positiveInfinity;
         float mininumDistance = Mathf.Infinity;
 
-        foreach (Player player in players){
-            float distance = Vector3.Distance(transform.position, player.transform.position);
+        foreach (Character character in characters){
+            float distance = Vector3.Distance(transform.position, character.transform.position);
 
-            if (distance < mininumDistance && player != owner){
-                closestPlayerPosition = player.transform.position;
+            if (distance < mininumDistance && character != owner){
+                closestCharacterPosition = character.transform.position;
                 mininumDistance = distance;
             }
         }
 
-        return closestPlayerPosition;
+        return closestCharacterPosition;
     }
 
     [ServerCallback]
     void OnTriggerEnter2D(Collider2D other)
     {
-        bool otherIsPlayer = other.gameObject.TryGetComponent<Player>(out Player otherPlayer);
-        if (!otherIsPlayer || otherPlayer == owner){
+        bool otherIsCharacter = other.gameObject.TryGetComponent<Character>(out Character otherCharacter);
+        if (!otherIsCharacter || otherCharacter == owner){
             return;
         }
 
-        otherPlayer.TakeDamage(damage);
+        otherCharacter.TakeDamage(damage);
         DestroySelf();
     }
 
