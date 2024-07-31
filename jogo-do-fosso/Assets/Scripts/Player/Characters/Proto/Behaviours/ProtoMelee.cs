@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
-public class ProtoMelee : PlayerSkill
+public class ProtoMelee : CharacterSkill
 {
     public ProtoPunch punch;
     public Transform punchPivot;

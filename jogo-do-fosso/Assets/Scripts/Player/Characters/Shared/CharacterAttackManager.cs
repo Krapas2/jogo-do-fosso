@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
-public class PlayerAttackManager : NetworkBehaviour
+public class CharacterAttackManager : NetworkBehaviour
 {
 
-    public PlayerSkill[] attacks;
+    public CharacterSkill[] attacks;
 
     void Start()
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
-public class PlayerSkill : NetworkBehaviour
+public class CharacterSkill : NetworkBehaviour
 {
 
     [SyncVar]

@@ -4,13 +4,13 @@ using UnityEngine;
 using Mirror;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class ProtoDash : PlayerSkill
+public class ProtoDash : CharacterSkill
 {
     public float speedBoost;
     public float dashLength;
     public float accelerationWhileDashing;
 
-    private PlayerMovement playerMovement;
+    private CharacterMovement characterMovement;
     private Rigidbody2D rb;
 
     private CameraData cameraData;
@@ -19,7 +19,7 @@ public class ProtoDash : PlayerSkill
     {
         base.Start();
         
-        playerMovement = GetComponent<PlayerMovement>();
+        characterMovement = GetComponent<CharacterMovement>();
         rb = GetComponent<Rigidbody2D>();
         
         cameraData = FindObjectOfType<CameraData>();
@@ -44,9 +44,9 @@ public class ProtoDash : PlayerSkill
 
     IEnumerator Slide()
     {
-        float originalAcceleration = playerMovement.acceleration;
-        playerMovement.acceleration = accelerationWhileDashing;
+        float originalAcceleration = characterMovement.acceleration;
+        characterMovement.acceleration = accelerationWhileDashing;
         yield return new WaitForSeconds(dashLength);
-        playerMovement.acceleration = originalAcceleration;
+        characterMovement.acceleration = originalAcceleration;
     }
 }

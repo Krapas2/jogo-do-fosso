@@ -23,11 +23,8 @@ public class PlayerManager : NetworkBehaviour
     IEnumerator SpawnRoutine() 
     {
         Spawn();
-        Debug.Log("waiting spawn");
         yield return new WaitUntil(CharacterIsAlive);
-        Debug.Log("waiting death");
         yield return new WaitUntil(CharacterIsDead);
-        Debug.Log("waiting cooldown");
         yield return new WaitForSeconds(respawnCooldown);
         StartCoroutine(SpawnRoutine());
     }

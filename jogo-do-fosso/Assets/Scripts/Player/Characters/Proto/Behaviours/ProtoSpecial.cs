@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
-public class ProtoSpecial : PlayerSkill
+public class ProtoSpecial : CharacterSkill
 {
     public ProtoSpecialProjectile projectilePrefab;
     public Transform projectileOrigin;
