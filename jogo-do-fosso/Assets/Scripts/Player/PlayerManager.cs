@@ -8,7 +8,8 @@ public class PlayerManager : NetworkBehaviour
     public Player character;
     public float respawnCooldown;
 
-    private Player characterInstance;
+    [HideInInspector]
+    public Player currentCharacter;
 
     void Start()
     {
@@ -33,12 +34,12 @@ public class PlayerManager : NetworkBehaviour
 
     bool CharacterIsAlive()
     {
-        return characterInstance;
+        return currentCharacter;
     }
 
     bool CharacterIsDead()
     {
-        return !characterInstance;
+        return !currentCharacter;
     }
 
     public void Spawn()
@@ -49,7 +50,8 @@ public class PlayerManager : NetworkBehaviour
     [Command]
     public void CmdSpawn()
     {
-        characterInstance = Instantiate(character);
+        Player characterInstance = Instantiate(character);
+        characterInstance.manager = this;
         NetworkServer.Spawn(characterInstance.gameObject, connectionToClient);
     }
 }

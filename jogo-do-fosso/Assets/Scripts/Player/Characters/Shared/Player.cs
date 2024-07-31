@@ -10,6 +10,10 @@ public class Player : NetworkBehaviour
     [SyncVar]
     public float currentHealth;
 
+    [HideInInspector]
+    [SyncVar]
+    public PlayerManager manager;
+
     void Start()
     {
         currentHealth = maxHealth;
@@ -19,11 +23,12 @@ public class Player : NetworkBehaviour
     }
 
     void SetupLocalPlayer(){
-        
         CameraController cameraController = FindObjectOfType<CameraController>();
         if(cameraController){
             cameraController.target = transform;
         }
+
+        manager.currentCharacter = this;
     }
 
     [ServerCallback]
