@@ -2,16 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Mirror;
 
-public class ProtoGUISpawner : MonoBehaviour
+public class ProtoGUISpawner : NetworkBehaviour
 {
     public ProtoGUI protoGUI;
 
     void Start()
     {
-        Canvas canvas = FindObjectOfType<Canvas>();
+        if(isOwned){
+            Canvas canvas = FindObjectOfType<Canvas>();
 
-        ProtoGUI spawnedProtoGUI = Instantiate(protoGUI, canvas.transform);
-        spawnedProtoGUI.proto = GetComponent<Character>();
+            ProtoGUI spawnedProtoGUI = Instantiate(protoGUI, canvas.transform);
+            spawnedProtoGUI.proto = GetComponent<Character>();
+        }
     }
 }
