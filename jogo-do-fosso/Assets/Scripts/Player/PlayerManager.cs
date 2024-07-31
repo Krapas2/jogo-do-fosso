@@ -5,11 +5,11 @@ using Mirror;
 
 public class PlayerManager : NetworkBehaviour
 {
-    public Player character;
+    public Character character;
     public float respawnCooldown;
 
     [HideInInspector]
-    public Player currentCharacter;
+    public Character currentCharacter;
 
     void Start()
     {
@@ -50,7 +50,7 @@ public class PlayerManager : NetworkBehaviour
     [Command]
     public void CmdSpawn()
     {
-        Player characterInstance = Instantiate(character);
+        Character characterInstance = Instantiate(character);
         characterInstance.manager = this;
         NetworkServer.Spawn(characterInstance.gameObject, connectionToClient);
     }

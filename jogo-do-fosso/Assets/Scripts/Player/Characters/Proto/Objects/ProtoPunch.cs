@@ -9,21 +9,21 @@ public class ProtoPunch : NetworkBehaviour
     public float damage;
 
     [HideInInspector]
-    public Player owner;
+    public Character owner;
 
     void OnTriggerEnter2D(Collider2D other) 
     {
-        bool otherIsPlayer = other.gameObject.TryGetComponent<Player>(out Player otherPlayer);
-        if(!otherIsPlayer || otherPlayer == owner){
+        bool otherIsCharacter = other.gameObject.TryGetComponent<Character>(out Character otherCharacter);
+        if(!otherIsCharacter || otherCharacter == owner){
             return;
         }
 
-        Damage(otherPlayer);
+        Damage(otherCharacter);
     }
 
     [Command]
-    void Damage(Player player)
+    void Damage(Character character)
     {
-        player.TakeDamage(damage);
+        character.TakeDamage(damage);
     }
 }

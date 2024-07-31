@@ -12,6 +12,6 @@ public class ProtoGUISpawner : MonoBehaviour
         Canvas canvas = FindObjectOfType<Canvas>();
 
         ProtoGUI spawnedProtoGUI = Instantiate(protoGUI, canvas.transform);
-        spawnedProtoGUI.proto = GetComponent<Player>();
+        spawnedProtoGUI.proto = GetComponent<Character>();
     }
 }

@@ -18,7 +18,7 @@ public class ProtoMelee : PlayerSkill
         
         cameraData = FindObjectOfType<CameraData>();
 
-        punch.owner = GetComponent<Player>();
+        punch.owner = GetComponent<Character>();
 
         punch.gameObject.SetActive(false);
     }

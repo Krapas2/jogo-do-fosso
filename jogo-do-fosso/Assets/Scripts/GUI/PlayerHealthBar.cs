@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class HealthBar : MonoBehaviour
 {
-    public Player player;
+    public Character character;
     
     private Animator animator;
 
@@ -21,7 +21,7 @@ public class HealthBar : MonoBehaviour
 
     void Animate()
     {
-        float healthPercentage = player.currentHealth / player.maxHealth;
+        float healthPercentage = character.currentHealth / character.maxHealth;
         float normalizedHealthPercentage = healthPercentage * animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
         animator.SetFloat("fillAmount", healthPercentage);
     }

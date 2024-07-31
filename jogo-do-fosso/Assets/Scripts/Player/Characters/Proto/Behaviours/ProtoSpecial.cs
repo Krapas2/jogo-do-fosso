@@ -8,7 +8,7 @@ public class ProtoSpecial : PlayerSkill
     public ProtoSpecialProjectile projectilePrefab;
     public Transform projectileOrigin;
 
-    private Player player;
+    private Character character;
 
     private CameraData cameraData;
 
@@ -16,7 +16,7 @@ public class ProtoSpecial : PlayerSkill
     {
         base.Start();
         
-        player = GetComponent<Player>();
+        character = GetComponent<Character>();
 
         cameraData = FindObjectOfType<CameraData>();
     }
@@ -41,7 +41,7 @@ public class ProtoSpecial : PlayerSkill
     {
         ProtoSpecialProjectile projectile = Instantiate(projectilePrefab, projectileOrigin.position, projectileOrigin.rotation);
 
-        projectile.owner = player;
+        projectile.owner = character;
         NetworkServer.Spawn(projectile.gameObject, connectionToClient);
     }
 }

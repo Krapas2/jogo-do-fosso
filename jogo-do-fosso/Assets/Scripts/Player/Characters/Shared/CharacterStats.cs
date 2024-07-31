@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
-public class Player : NetworkBehaviour
+public class Character : NetworkBehaviour
 {
     [SyncVar]
     public float maxHealth;
