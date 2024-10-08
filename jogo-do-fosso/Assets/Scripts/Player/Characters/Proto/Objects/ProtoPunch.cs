@@ -52,7 +52,6 @@ public class ProtoPunch : NetworkBehaviour
     [TargetRpc]
     void TargetKnockback(NetworkConnectionToClient target, NetworkIdentity other, Vector2 vector)
     {
-        Debug.Log(other.gameObject);
         if(other.gameObject.TryGetComponent<Rigidbody2D>(out Rigidbody2D rigidbody)){
             rigidbody.velocity = vector;
         }
@@ -60,7 +59,6 @@ public class ProtoPunch : NetworkBehaviour
 
     void OwnedKnockback(NetworkIdentity other, Vector2 vector)
     {
-        Debug.Log(other.gameObject);
         if(other.gameObject.TryGetComponent<Rigidbody2D>(out Rigidbody2D rigidbody)){
             rigidbody.velocity = vector;
         }
