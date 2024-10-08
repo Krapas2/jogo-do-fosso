@@ -331,6 +331,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   damage: 6
+  knockback: 36
   owner: {fileID: 0}
 --- !u!1 &4402935076552515082
 GameObject:
@@ -474,6 +475,7 @@ GameObject:
   - component: {fileID: 7179803912739190303}
   - component: {fileID: 4867834645569797928}
   - component: {fileID: -4741463807883281859}
+  - component: {fileID: 4453576892085162978}
   m_Layer: 3
   m_Name: ProtoPlayer
   m_TagString: Untagged
@@ -812,4 +814,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1974a57f0a4296a2862cd2685aecce8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
   protoGUI: {fileID: 2041142443845425677, guid: 9ef8d4f432f9a5fc998ab1c8058cc411, type: 3}
+--- !u!114 &4453576892085162978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9085072672143096352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab2cbc52526ea384ba280d13cd1a57b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 1
+  syncMode: 0
+  syncInterval: 0
+  target: {fileID: 976780453161735373}
+  clientAuthority: 0
+  syncVelocity: 1
+  clearVelocity: 0
+  velocitySensitivity: 0.1
+  syncAngularVelocity: 1
+  clearAngularVelocity: 0
+  angularVelocitySensitivity: 0.1
