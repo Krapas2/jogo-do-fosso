@@ -465,17 +465,17 @@ GameObject:
   - component: {fileID: 8757584577896222944}
   - component: {fileID: 2227872304641096914}
   - component: {fileID: 2195077057416962828}
+  - component: {fileID: 4453576892085162978}
   - component: {fileID: 9092953593825701662}
   - component: {fileID: 976780453161735373}
   - component: {fileID: -3875696985888235369}
   - component: {fileID: -3448187068477018330}
+  - component: {fileID: -4741463807883281859}
   - component: {fileID: -7366154720410629870}
   - component: {fileID: 3693093015806852811}
   - component: {fileID: 6770122621111299099}
   - component: {fileID: 7179803912739190303}
-  - component: {fileID: 4867834645569797928}
-  - component: {fileID: -4741463807883281859}
-  - component: {fileID: 4453576892085162978}
+  - component: {fileID: 5338311785227138464}
   m_Layer: 3
   m_Name: ProtoPlayer
   m_TagString: Untagged
@@ -605,6 +605,29 @@ MonoBehaviour:
   rotationSensitivity: 0.01
   positionPrecision: 0.01
   scalePrecision: 0.01
+--- !u!114 &4453576892085162978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9085072672143096352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab2cbc52526ea384ba280d13cd1a57b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 1
+  syncMode: 0
+  syncInterval: 0
+  target: {fileID: 976780453161735373}
+  clientAuthority: 0
+  syncVelocity: 1
+  clearVelocity: 0
+  velocitySensitivity: 0.1
+  syncAngularVelocity: 1
+  clearAngularVelocity: 0
+  angularVelocitySensitivity: 0.1
 --- !u!58 &9092953593825701662
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -702,6 +725,22 @@ MonoBehaviour:
   syncInterval: 0
   speed: 10
   acceleration: 15
+--- !u!114 &-4741463807883281859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9085072672143096352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1974a57f0a4296a2862cd2685aecce8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  protoGUI: {fileID: 2041142443845425677, guid: 9ef8d4f432f9a5fc998ab1c8058cc411, type: 3}
 --- !u!114 &-7366154720410629870
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -782,7 +821,7 @@ MonoBehaviour:
   punch: {fileID: 6859166782623158014}
   punchPivot: {fileID: 845264877670774031}
   punchLength: 0.5
---- !u!114 &4867834645569797928
+--- !u!114 &5338311785227138464
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -791,53 +830,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 9085072672143096352}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 348d47adbfdb915b28086a159b9080b3, type: 3}
+  m_Script: {fileID: 11500000, guid: 7e44992f918f8da4ca5ca477ad626b19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  cooldown: 2
+  cooldown: 0
   cooldownProgress: 0
   canUse: 0
-  projectilePrefab: {fileID: 8606801259190419750, guid: 11ee5293040dbb630a2b74445d62eca1, type: 3}
-  projectileOrigin: {fileID: 1316058130428274187}
---- !u!114 &-4741463807883281859
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9085072672143096352}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1974a57f0a4296a2862cd2685aecce8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
-  protoGUI: {fileID: 2041142443845425677, guid: 9ef8d4f432f9a5fc998ab1c8058cc411, type: 3}
---- !u!114 &4453576892085162978
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9085072672143096352}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab2cbc52526ea384ba280d13cd1a57b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncDirection: 1
-  syncMode: 0
-  syncInterval: 0
-  target: {fileID: 976780453161735373}
-  clientAuthority: 0
-  syncVelocity: 1
-  clearVelocity: 0
-  velocitySensitivity: 0.1
-  syncAngularVelocity: 1
-  clearAngularVelocity: 0
-  angularVelocitySensitivity: 0.1
+  sentryLevels:
+  - sentry: {fileID: 4902265646030851901, guid: 30c0ca1d78e6994408fb44f5b951127b, type: 3}
+    cooldown: 1
+  - sentry: {fileID: 4902265646030851901, guid: 4f1ed9cb2f97b4343b1eecf049e8f6c9, type: 3}
+    cooldown: 2
+  - sentry: {fileID: 4902265646030851901, guid: 82c161006ca1ffe40b29cf759c4c0a77, type: 3}
+    cooldown: 3

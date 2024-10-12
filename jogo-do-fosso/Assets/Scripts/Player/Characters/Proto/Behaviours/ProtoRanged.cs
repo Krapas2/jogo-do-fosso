@@ -27,7 +27,7 @@ public class ProtoRanged : CharacterSkill
         Aim();
 
         if(Input.GetButtonDown("Fire1") && canUse){
-            Fire();
+            CmdFire();
             StartCoroutine(Cooldown());
         }
     }
@@ -38,7 +38,7 @@ public class ProtoRanged : CharacterSkill
     }
 
     [Command]
-    void Fire()
+    void CmdFire()
     {
         ProtoProjectile projectile = Instantiate(projectilePrefab, projectileOrigin.position, projectileOrigin.rotation);
 

@@ -26,7 +26,7 @@ public class ProtoSpecial : CharacterSkill
         Aim();
 
         if(Input.GetButtonDown("Special") && canUse){
-            Fire();
+            CmdFire();
             StartCoroutine(Cooldown());
         }
     }
@@ -37,7 +37,7 @@ public class ProtoSpecial : CharacterSkill
     }
 
     [Command]
-    void Fire()
+    void CmdFire()
     {
         ProtoSpecialProjectile projectile = Instantiate(projectilePrefab, projectileOrigin.position, projectileOrigin.rotation);
 
