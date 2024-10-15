@@ -39,26 +39,42 @@ public class ProtoPunch : NetworkBehaviour
 
 
         if(other.gameObject.TryGetComponent<NetworkIdentity>(out NetworkIdentity otherIdentity)){
-            Vector2 direction = transform.up;
-            TargetKnockback(otherIdentity.connectionToClient, otherIdentity, direction * knockback);
+            Debug.Log(otherIdentity.connectionToClient);
 
-            TargetDamage(otherIdentity.connectionToClient, otherIdentity, damage);
-        }
-        if(other.gameObject.TryGetComponent<Character>(out Character otherCharacter)){
+            Vector2 direction = transform.up;
+
+            if(!otherIdentity.isServer){
+                TargetKnockback(otherIdentity.connectionToClient, otherIdentity, direction * knockback);
+            }else{
+                Knockback(otherIdentity, direction * knockback);
+            }
+            
+            Damage(otherIdentity, damage);
         }
     }
 
-    [TargetRpc]
-    void TargetDamage(NetworkConnectionToClient target, NetworkIdentity other, float damage)
+    [Server]
+    void Damage(NetworkIdentity other, float damage)
     {
         if(other.gameObject.TryGetComponent<Character>(out Character character)){
             character.TakeDamage(damage);
         }
     }
 
+    //Client has authority over its rigidbody, so the function must be called there
     [TargetRpc]
     void TargetKnockback(NetworkConnectionToClient target, NetworkIdentity other, Vector2 vector)
     {
+        Debug.Log("madeitknockOut");
+        if(other.gameObject.TryGetComponent<Rigidbody2D>(out Rigidbody2D rigidbody)){
+            rigidbody.velocity = vector;
+        }
+    }
+
+    [Server]
+    void Knockback(NetworkIdentity other, Vector2 vector)
+    {
+        Debug.Log("madeitknockIn");
         if(other.gameObject.TryGetComponent<Rigidbody2D>(out Rigidbody2D rigidbody)){
             rigidbody.velocity = vector;
         }
