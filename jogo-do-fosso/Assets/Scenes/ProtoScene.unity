@@ -259,10 +259,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 985778425}
-  - component: {fileID: 985778424}
   - component: {fileID: 985778423}
-  - component: {fileID: 985778422}
+  - component: {fileID: 985778427}
   - component: {fileID: 985778421}
+  - component: {fileID: 985778424}
+  - component: {fileID: 985778422}
   - component: {fileID: 985778426}
   m_Layer: 0
   m_Name: Circle
@@ -440,6 +441,40 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &985778427
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 985778420}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ff3ba0becae47b8b9381191598957c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 1
+  syncMode: 0
+  syncInterval: 0
+  target: {fileID: 985778425}
+  syncPosition: 1
+  syncRotation: 1
+  syncScale: 0
+  onlySyncOnChange: 1
+  compressRotation: 1
+  interpolatePosition: 1
+  interpolateRotation: 1
+  interpolateScale: 1
+  coordinateSpace: 0
+  sendIntervalMultiplier: 1
+  timelineOffset: 0
+  showGizmos: 0
+  showOverlay: 0
+  overlayColor: {r: 0, g: 0, b: 0, a: 0.5}
+  onlySyncOnChangeCorrectionMultiplier: 2
+  rotationSensitivity: 0.01
+  positionPrecision: 0.01
+  scalePrecision: 0.01
 --- !u!1 &1138085334
 GameObject:
   m_ObjectHideFlags: 0
@@ -957,10 +992,11 @@ MonoBehaviour:
   spawnPrefabs:
   - {fileID: 9085072672143096352, guid: f7dedb7603f252af8a062363b1168339, type: 3}
   - {fileID: 5089950848276985383, guid: b968d260a17bbea49a05496bc21f86a1, type: 3}
+  - {fileID: 6223885006154974442, guid: a76bbec5351380445b43291bd1175d6c, type: 3}
   - {fileID: 5089950848276985383, guid: 11ee5293040dbb630a2b74445d62eca1, type: 3}
   - {fileID: 3480126238383694925, guid: 30c0ca1d78e6994408fb44f5b951127b, type: 3}
-  - {fileID: 3480126238383694925, guid: bb01fbcce049cce4da22bf6cbe2e303c, type: 3}
-  - {fileID: 3480126238383694925, guid: 2d4c4f36c269e3941ae3172d55da7a54, type: 3}
+  - {fileID: 3480126238383694925, guid: 4f1ed9cb2f97b4343b1eecf049e8f6c9, type: 3}
+  - {fileID: 3480126238383694925, guid: 82c161006ca1ffe40b29cf759c4c0a77, type: 3}
   exceptionsDisconnect: 1
   snapshotSettings:
     bufferTimeMultiplier: 2

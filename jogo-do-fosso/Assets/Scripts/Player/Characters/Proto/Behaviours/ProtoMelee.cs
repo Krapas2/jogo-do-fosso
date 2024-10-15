@@ -5,10 +5,12 @@ using Mirror;
 
 public class ProtoMelee : CharacterSkill
 {
-    public ProtoPunch punch;
-    public Transform punchPivot;
+    public ProtoPunch punchPrefab;
     [SyncVar]
     public float punchLength;
+
+    [SyncVar]
+    private ProtoPunch currentPunch;
 
     private CameraData cameraData;
 
@@ -17,31 +19,31 @@ public class ProtoMelee : CharacterSkill
         base.Start();
         
         cameraData = FindObjectOfType<CameraData>();
-
-        punch.owner = GetComponent<Character>();
-
-        punch.gameObject.SetActive(false);
     }
 
     void Update()
     {
-        Aim();
+        if(currentPunch){
+            Aim();
+        }
 
         if(Input.GetButtonDown("Fire1") && canUse){
-            StartCoroutine(Punch());
-            StartCoroutine(Cooldown());
+            CmdSpawnPunch();
         }
     }
 
     void Aim()
     {
-        punchPivot.up = cameraData.worldMousePosition - transform.position.Vector2();
+        currentPunch.transform.position = transform.position;
+        currentPunch.transform.up = cameraData.worldMousePosition - transform.position.Vector2();
     }
 
-    IEnumerator Punch()
-    {
-        punch.gameObject.SetActive(true);
-        yield return new WaitForSeconds(punchLength);
-        punch.gameObject.SetActive(false);
+    [Command]
+    void CmdSpawnPunch(){
+        currentPunch = Instantiate(punchPrefab, transform.position, Quaternion.identity);
+
+        currentPunch.owner = GetComponent<Character>();
+
+        NetworkServer.Spawn(currentPunch.gameObject, connectionToClient);
     }
 }

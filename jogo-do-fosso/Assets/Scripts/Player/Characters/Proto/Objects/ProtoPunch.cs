@@ -12,16 +12,25 @@ public class ProtoPunch : NetworkBehaviour
     public float knockback;
 
     [HideInInspector]
+    [SyncVar]
     public Character owner;
 
     private CameraData cameraData;
 
-    void Start(){
-        if (isOwned) {
-            cameraData = FindObjectOfType<CameraData>();
+    void Update()
+    {
+        CheckOwner();
+    }
+
+    [ServerCallback]
+    void CheckOwner()
+    {
+        if (!owner) {
+            NetworkServer.Destroy(gameObject);
         }
     }
 
+    [ServerCallback]
     void OnTriggerEnter2D(Collider2D other) 
     {
         if(other.gameObject == owner.gameObject){
@@ -29,35 +38,26 @@ public class ProtoPunch : NetworkBehaviour
         }
 
 
-        if(other.gameObject.TryGetComponent<Character>(out Character otherCharacter)){
-            CmdDamage(otherCharacter);
-        }
-
         if(other.gameObject.TryGetComponent<NetworkIdentity>(out NetworkIdentity otherIdentity)){
-            Vector2 direction = (cameraData.worldMousePosition - transform.position.Vector2()).normalized;
-            if(otherIdentity.connectionToClient != connectionToClient){
-                TargetKnockback(otherIdentity.connectionToClient, otherIdentity, direction * knockback);
-            }else{
-                OwnedKnockback(otherIdentity, direction * knockback);
-            }
+            Vector2 direction = transform.up;
+            TargetKnockback(otherIdentity.connectionToClient, otherIdentity, direction * knockback);
+
+            TargetDamage(otherIdentity.connectionToClient, otherIdentity, damage);
+        }
+        if(other.gameObject.TryGetComponent<Character>(out Character otherCharacter)){
         }
     }
 
-    [Command]
-    void CmdDamage(Character character)
+    [TargetRpc]
+    void TargetDamage(NetworkConnectionToClient target, NetworkIdentity other, float damage)
     {
-        character.TakeDamage(damage);
+        if(other.gameObject.TryGetComponent<Character>(out Character character)){
+            character.TakeDamage(damage);
+        }
     }
 
     [TargetRpc]
     void TargetKnockback(NetworkConnectionToClient target, NetworkIdentity other, Vector2 vector)
-    {
-        if(other.gameObject.TryGetComponent<Rigidbody2D>(out Rigidbody2D rigidbody)){
-            rigidbody.velocity = vector;
-        }
-    }
-
-    void OwnedKnockback(NetworkIdentity other, Vector2 vector)
     {
         if(other.gameObject.TryGetComponent<Rigidbody2D>(out Rigidbody2D rigidbody)){
             rigidbody.velocity = vector;
