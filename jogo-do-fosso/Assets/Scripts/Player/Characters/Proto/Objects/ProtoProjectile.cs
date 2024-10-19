@@ -34,12 +34,14 @@ public class ProtoProjectile : NetworkBehaviour
     [ServerCallback]
     void OnTriggerEnter2D(Collider2D other) 
     {
-        bool otherIsCharacter = other.gameObject.TryGetComponent<Character>(out Character otherCharacter);
-        if(!otherIsCharacter || otherCharacter == owner){
+        if(other.gameObject == owner.gameObject){
             return;
         }
 
-        otherCharacter.TakeDamage(damage);
+        if(other.gameObject.TryGetComponent<Character>(out Character otherCharacter)){
+            otherCharacter.TakeDamage(damage);
+        }
+
         DestroySelf();
     }
     

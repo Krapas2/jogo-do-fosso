@@ -27,7 +27,7 @@ public class ProtoMelee : CharacterSkill
             Aim();
         }
 
-        if(Input.GetButtonDown("Fire1") && canUse){
+        if(Input.GetButtonDown("Fire1") && !currentPunch && canUse){
             CmdSpawnPunch();
         }
     }
@@ -40,10 +40,12 @@ public class ProtoMelee : CharacterSkill
 
     [Command]
     void CmdSpawnPunch(){
-        currentPunch = Instantiate(punchPrefab, transform.position, Quaternion.identity);
+        ProtoPunch punchInstance = Instantiate(punchPrefab, transform.position, Quaternion.identity);
 
-        currentPunch.owner = GetComponent<Character>();
+        punchInstance.owner = this;
 
-        NetworkServer.Spawn(currentPunch.gameObject, connectionToClient);
+        NetworkServer.Spawn(punchInstance.gameObject, connectionToClient);
+
+        currentPunch = punchInstance;
     }
 }

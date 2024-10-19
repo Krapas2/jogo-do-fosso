@@ -28,20 +28,25 @@ public class ProtoDash : CharacterSkill
     void Update()
     {
         if(Input.GetButton("Fire2") && canUse){
-            Dash();
+            Vector2 lookDirection = cameraData.worldMousePosition - transform.position.Vector2();
+
+            CmdDash(lookDirection);
             StartCoroutine(Cooldown());
-            StartCoroutine(Slide());
         }
     }
 
-    void Dash()
+    [Command]
+    void CmdDash(Vector2 lookDirection)
     {
         bool running = rb.velocity.magnitude > 1f;
         Vector2 runDirection = rb.velocity;
-        Vector2 lookDirection = cameraData.worldMousePosition - transform.position.Vector2();
+
         rb.velocity += (running ? runDirection : lookDirection).normalized * speedBoost;
+        
+        StartCoroutine(Slide());
     }
 
+    [Server]
     IEnumerator Slide()
     {
         float originalAcceleration = characterMovement.acceleration;

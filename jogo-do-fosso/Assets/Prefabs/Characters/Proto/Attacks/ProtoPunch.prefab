@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7878832891545011235}
   - component: {fileID: 7662943715984222687}
   - component: {fileID: 1241009468515251104}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: ProtoPunch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -168,7 +168,7 @@ GameObject:
   - component: {fileID: 5955806424485033964}
   - component: {fileID: 8611638440833575450}
   - component: {fileID: 4837079684982286618}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: ProtoPunch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -285,5 +285,6 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   damage: 6
-  knockback: 36
+  knockback: 30
+  lifeTime: 10
   owner: {fileID: 0}

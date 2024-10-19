@@ -6,8 +6,9 @@ using Mirror;
 [RequireComponent(typeof(Rigidbody2D))]
 public class CharacterMovement : NetworkBehaviour
 {
-
+    [SyncVar]
     public float speed = 5f;
+    [SyncVar]
     public float acceleration = .1f;
 
     private Rigidbody2D rb;
@@ -23,16 +24,17 @@ public class CharacterMovement : NetworkBehaviour
 
     void Update()
     {
-        Accelerate();
-    }
-
-    void Accelerate()
-    {
-        Vector2 direction = new Vector2(
+        Vector2 moveInput = new Vector2(
             Input.GetAxisRaw("Horizontal"),
             Input.GetAxisRaw("Vertical")
         ).normalized;
 
+        CmdAccelerate(moveInput);
+    }
+
+    [Command]
+    void CmdAccelerate(Vector2 direction)
+    {
         rb.velocity = Vector2.Lerp(
             direction * speed,
             rb.velocity,
