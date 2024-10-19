@@ -241,4 +241,8 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
+  aimRange: 7.5
+  aimLayers:
+    serializedVersion: 2
+    m_Bits: 8
   owner: {fileID: 0}

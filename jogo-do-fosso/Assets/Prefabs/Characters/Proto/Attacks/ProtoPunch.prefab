@@ -286,5 +286,5 @@ MonoBehaviour:
   syncInterval: 0
   damage: 6
   knockback: 30
-  lifeTime: 10
+  lifeTime: 0.35
   owner: {fileID: 0}
