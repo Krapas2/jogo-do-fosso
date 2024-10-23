@@ -27,9 +27,7 @@ public class ProtoSentry : CharacterSkill
     [Client]
     IEnumerator WaitForOwnerDeath()
     {
-        Debug.Log("waiting on" + owner);
         yield return new WaitUntil(CheckOwner);
-        Debug.Log("should be dead");
         CmdDestroySelf(); 
     }
 
