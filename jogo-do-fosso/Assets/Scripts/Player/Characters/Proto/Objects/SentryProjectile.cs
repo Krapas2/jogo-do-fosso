@@ -4,7 +4,7 @@ using UnityEngine;
 using Mirror;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class ProtoProjectile : NetworkBehaviour
+public class SentryProjectile : NetworkBehaviour
 {
     [SyncVar]
     public float damage;
@@ -16,7 +16,7 @@ public class ProtoProjectile : NetworkBehaviour
     public LayerMask collide;
 
     [HideInInspector]
-    public ProtoRanged owner;
+    public ProtoSentry owner;
     private Rigidbody2D rb;
 
     void Start()
@@ -34,7 +34,7 @@ public class ProtoProjectile : NetworkBehaviour
     [ServerCallback]
     void OnTriggerEnter2D(Collider2D other) 
     {
-        if(owner && other.gameObject == owner.gameObject){
+        if(owner && (other.gameObject == owner.gameObject || (owner.owner && other.gameObject == owner.owner.gameObject))){
             return;
         }
 

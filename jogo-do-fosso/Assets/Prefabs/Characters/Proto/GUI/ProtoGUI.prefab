@@ -131,7 +131,7 @@ MonoBehaviour:
   meleeBar: {fileID: 5153895417017936178}
   rangedBar: {fileID: 1484088342671465671}
   dashBar: {fileID: 301922347914802097}
-  specialBar: {fileID: 1602125042194234507}
+  sentryBar: {fileID: 1602125042194234507}
 --- !u!1 &2199242855377722322
 GameObject:
   m_ObjectHideFlags: 0
@@ -219,7 +219,7 @@ GameObject:
   - component: {fileID: 1949652071384399023}
   - component: {fileID: 1602125042194234507}
   m_Layer: 5
-  m_Name: SpecialBar
+  m_Name: SentryBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

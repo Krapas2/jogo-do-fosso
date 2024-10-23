@@ -10,54 +10,73 @@ public class ProtoPunch : NetworkBehaviour
     public float damage;
     [SyncVar]
     public float knockback;
+    [SyncVar]
+    public float lifeTime;
 
     [HideInInspector]
-    public Character owner;
+    [SyncVar]
+    public ProtoMelee owner;
 
     private CameraData cameraData;
 
-    void Start(){
-        if (isOwned) {
-            cameraData = FindObjectOfType<CameraData>();
+    private List<Collider2D> previouslyHit = new List<Collider2D>();
+
+    void Start()
+    {
+        // isOwned refers to the client this is running in having authority
+        // if isOwned is true, owner is also owned and ProtoMelee might be enabled
+        // otherwise checkOwner will always run DestroySelf
+        if(isOwned){
+            StartCoroutine(WaitForOwnerDeath());
+            Invoke(nameof(CmdDestroySelf), lifeTime);
         }
     }
 
-    void OnTriggerEnter2D(Collider2D other) 
+    [Client]
+    IEnumerator WaitForOwnerDeath()
     {
-        if(other.gameObject == owner.gameObject){
-            return;
-        }
+        yield return new WaitUntil(CheckOwner);
+        CmdDestroySelf(); 
+    }
 
-
-        if(other.gameObject.TryGetComponent<Character>(out Character otherCharacter)){
-            CmdDamage(otherCharacter);
-        }
-
-        if(other.gameObject.TryGetComponent<NetworkIdentity>(out NetworkIdentity otherIdentity)){
-            Vector2 direction = (cameraData.worldMousePosition - transform.position.Vector2()).normalized;
-            if(otherIdentity.connectionToClient != connectionToClient){
-                TargetKnockback(otherIdentity.connectionToClient, otherIdentity, direction * knockback);
-            }else{
-                OwnedKnockback(otherIdentity, direction * knockback);
-            }
-        }
+    bool CheckOwner()
+    {
+        return !owner || !owner.enabled;
     }
 
     [Command]
-    void CmdDamage(Character character)
+    public void CmdDestroySelf()
     {
-        character.TakeDamage(damage);
-    }
-
-    [TargetRpc]
-    void TargetKnockback(NetworkConnectionToClient target, NetworkIdentity other, Vector2 vector)
-    {
-        if(other.gameObject.TryGetComponent<Rigidbody2D>(out Rigidbody2D rigidbody)){
-            rigidbody.velocity = vector;
+        if(gameObject){
+            NetworkServer.Destroy(gameObject);
         }
     }
 
-    void OwnedKnockback(NetworkIdentity other, Vector2 vector)
+    [ServerCallback]
+    void OnTriggerEnter2D(Collider2D other) 
+    {
+        if(other.gameObject == owner.gameObject || previouslyHit.Contains(other)){
+            return;
+        }
+
+        if(other.gameObject.TryGetComponent<NetworkIdentity>(out NetworkIdentity otherIdentity)){
+            Vector2 direction = transform.up;
+
+            Knockback(otherIdentity, direction * knockback);
+            Damage(otherIdentity, damage);
+            previouslyHit.Add(other);
+        }
+    }
+
+    void Damage(NetworkIdentity other, float damage)
+    {
+        if(other.gameObject.TryGetComponent<Character>(out Character character)){
+            character.TakeDamage(damage);
+        }
+    }
+
+    [Server]
+    void Knockback(NetworkIdentity other, Vector2 vector)
     {
         if(other.gameObject.TryGetComponent<Rigidbody2D>(out Rigidbody2D rigidbody)){
             rigidbody.velocity = vector;

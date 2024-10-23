@@ -11,19 +11,19 @@ public class ProtoGUI : MonoBehaviour
     public Image meleeBar;
     public Image rangedBar;
     public Image dashBar;
-    public Image specialBar;
+    public Image sentryBar;
 
     private ProtoMelee protoMelee;
     private ProtoRanged protoRanged;
     private ProtoDash protoDash;
-    private ProtoSpecial protoSpecial;
+    private ProtoSentrySpawner protoSentrySpawner;
 
     void Start()
     {
         protoMelee = proto.GetComponent<ProtoMelee>();
         protoRanged = proto.GetComponent<ProtoRanged>();
         protoDash = proto.GetComponent<ProtoDash>();
-        protoSpecial = proto.GetComponent<ProtoSpecial>();
+        protoSentrySpawner = proto.GetComponent<ProtoSentrySpawner>();
     }
 
     void Update()
@@ -31,6 +31,6 @@ public class ProtoGUI : MonoBehaviour
         meleeBar.fillAmount = protoMelee.cooldownProgress / protoMelee.cooldown;
         rangedBar.fillAmount = protoRanged.cooldownProgress / protoRanged.cooldown;
         dashBar.fillAmount = protoDash.cooldownProgress / protoDash.cooldown;
-        specialBar.fillAmount = protoSpecial.cooldownProgress / protoSpecial.cooldown;
+        sentryBar.fillAmount = protoSentrySpawner.cooldownProgress / protoSentrySpawner.cooldown;
     }
 }

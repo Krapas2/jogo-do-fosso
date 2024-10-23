@@ -323,7 +323,7 @@ namespace Mirror
                 // over unreliable, they might come in before the object was spawned.
                 // for example, NetworkTransform.
                 // let's not spam the console for unreliable out of order messages.
-                if (channelId == Channels.Reliable)
+                if (channelId == Channels.Reliable && identity)
                     Debug.LogWarning($"Spawned object not found when handling Command message {identity.name} netId={msg.netId}");
                 return;
             }
@@ -332,18 +332,20 @@ namespace Mirror
             // -> so if this connection's controller has a different netId then
             //    only allow the command if clientAuthorityOwner
             bool requiresAuthority = RemoteProcedureCalls.CommandRequiresAuthority(msg.functionHash);
-            if (requiresAuthority && identity.connectionToClient != conn)
-            {
-                // Attempt to identify the component and method to narrow down the cause of the error.
-                if (msg.componentIndex < identity.NetworkBehaviours.Length && identity.NetworkBehaviours[msg.componentIndex] is NetworkBehaviour component)
-                    if (RemoteProcedureCalls.GetFunctionMethodName(msg.functionHash, out string methodName))
-                    {
-                        Debug.LogWarning($"Command {methodName} received for {identity.name} [netId={msg.netId}] component {component.name} [index={msg.componentIndex}] without authority");
-                        return;
-                    }
+            if(identity){
+                if (requiresAuthority && identity.connectionToClient != conn)
+                {
+                    // Attempt to identify the component and method to narrow down the cause of the error.
+                    if (msg.componentIndex < identity.NetworkBehaviours.Length && identity.NetworkBehaviours[msg.componentIndex] is NetworkBehaviour component)
+                        if (RemoteProcedureCalls.GetFunctionMethodName(msg.functionHash, out string methodName))
+                        {
+                            Debug.LogWarning($"Command {methodName} received for {identity.name} [netId={msg.netId}] component {component.name} [index={msg.componentIndex}] without authority");
+                            return;
+                        }
 
-                Debug.LogWarning($"Command received for {identity.name} [netId={msg.netId}] without authority");
-                return;
+                    Debug.LogWarning($"Command received for {identity.name} [netId={msg.netId}] without authority");
+                    return;
+                }
             }
 
             // Debug.Log($"OnCommandMessage for netId:{msg.netId} conn:{conn}");

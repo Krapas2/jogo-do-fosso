@@ -15,6 +15,7 @@ public class PlayerManager : NetworkBehaviour
     {
         if(!isLocalPlayer) {
             this.enabled = false;
+            return;
         }
         
         StartCoroutine(SpawnRoutine());
