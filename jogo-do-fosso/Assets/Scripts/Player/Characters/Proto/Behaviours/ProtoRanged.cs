@@ -17,8 +17,6 @@ public class ProtoRanged : CharacterSkill
     {
         base.Start();
 
-        character = GetComponent<Character>();
-
         cameraData = FindObjectOfType<CameraData>();
     }
 
@@ -42,7 +40,7 @@ public class ProtoRanged : CharacterSkill
     {
         ProtoProjectile projectile = Instantiate(projectilePrefab, projectileOrigin.position, projectileOrigin.rotation);
 
-        projectile.owner = character;
+        projectile.owner = this;
         NetworkServer.Spawn(projectile.gameObject);
     }
 }

@@ -3,39 +3,84 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
-public class ProtoSentry : NetworkBehaviour
+public class ProtoSentry : CharacterSkill
 {
-    [SyncVar]
+    public SentryProjectile projectilePrefab;
+    public Transform projectileOrigin;
     public float aimRange;
-    [SyncVar]
     public LayerMask aimLayers;
 
     [SyncVar]
     [HideInInspector]
     public ProtoSentrySpawner owner;
 
-    void Start()
+    [SyncVar]
+    [HideInInspector]
+    public Vector3 targetPosition;
+
+    void Start(){
+        if(isOwned){
+            StartCoroutine(WaitForOwnerDeath());
+        }
+    }
+    
+    [Client]
+    IEnumerator WaitForOwnerDeath()
     {
-        
+        Debug.Log("waiting on" + owner);
+        yield return new WaitUntil(CheckOwner);
+        Debug.Log("should be dead");
+        CmdDestroySelf(); 
+    }
+
+    bool CheckOwner()
+    {
+        return !owner || !owner.enabled;
+    }
+
+    [Command]
+    public void CmdDestroySelf()
+    {
+        NetworkServer.Destroy(gameObject);
     }
 
     void Update()
     {
-        Aim();
+        SetTarget();
+
+        //need to check for aimRange in case of no possible targets in range
+        if(targetPosition != transform.position){
+            Aim();
+
+            if(canUse){
+                Fire();
+                StartCoroutine(Cooldown());
+            }
+        }
+    }
+
+    [Server]
+    void SetTarget()
+    {
+        targetPosition = ClosestEligibleCharacter();
     }
 
     [Server]
     void Aim()
     {
-        Vector3 targetPosition = ClosestPlayerPositionInSight();
-        //need to check for aimRange in case of no possible targets in range
-        if(Vector3.Distance(transform.position, targetPosition) < aimRange){
-            Debug.Log(targetPosition);
-            transform.up = targetPosition;
-        }
+        projectileOrigin.up = targetPosition - transform.position;
+    }
+
+    [Server]
+    void Fire()
+    {
+        SentryProjectile projectile = Instantiate(projectilePrefab, projectileOrigin.position, projectileOrigin.rotation);
+
+        projectile.owner = this;
+        NetworkServer.Spawn(projectile.gameObject);
     }
     
-    Vector3 ClosestPlayerPositionInSight()
+    Vector3 ClosestEligibleCharacter()
     {
         Character[] characters = FindObjectsOfType<Character>();
 
@@ -43,7 +88,7 @@ public class ProtoSentry : NetworkBehaviour
         float mininumDistance = Mathf.Infinity;
 
         bool ownerHasCharacter = false;
-        Character ownerCharacter = new Character();
+        Character ownerCharacter = null;
         if(owner){
             ownerHasCharacter = owner.TryGetComponent<Character>(out ownerCharacter);
         }
@@ -53,13 +98,8 @@ public class ProtoSentry : NetworkBehaviour
                 continue;
             }
 
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, character.transform.position, aimRange, aimLayers);
-            Debug.DrawLine(transform.position, character.transform.position);
-            if(!hit){
-                Debug.Log("didntmakeit");
-                continue;
-            }else if(!(hit.collider.gameObject == character.gameObject)){
-                Debug.Log("madeit");
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, character.transform.position - transform.position, aimRange, aimLayers);
+            if(!hit || !(hit.collider.gameObject == character.gameObject)){
                 continue;
             }
 
@@ -69,6 +109,10 @@ public class ProtoSentry : NetworkBehaviour
                 closestCharacterPosition = character.transform.position;
                 mininumDistance = distance;
             }
+        }
+
+        if(closestCharacterPosition.Equals(Vector3.positiveInfinity)){
+            return transform.position;
         }
 
         return closestCharacterPosition;
