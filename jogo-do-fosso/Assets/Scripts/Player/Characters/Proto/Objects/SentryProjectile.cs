@@ -38,8 +38,8 @@ public class SentryProjectile : NetworkBehaviour
             return;
         }
 
-        if(other.gameObject.TryGetComponent<Character>(out Character otherCharacter)){
-            otherCharacter.TakeDamage(damage);
+        if(other.gameObject.TryGetComponent<CharacterHealth>(out CharacterHealth otherCharacterHealth)){
+            otherCharacterHealth.TakeDamage(damage);
         }
 
         DestroySelf();

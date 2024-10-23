@@ -7,8 +7,6 @@ public class ProtoRanged : CharacterSkill
 {
     public ProtoProjectile projectilePrefab;
     public Transform projectileOrigin;
-    
-    private Character character;
 
     private CameraData cameraData;
 

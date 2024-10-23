@@ -70,8 +70,8 @@ public class ProtoPunch : NetworkBehaviour
 
     void Damage(NetworkIdentity other, float damage)
     {
-        if(other.gameObject.TryGetComponent<Character>(out Character character)){
-            character.TakeDamage(damage);
+        if(other.gameObject.TryGetComponent<CharacterHealth>(out CharacterHealth characterHealth)){
+            characterHealth.TakeDamage(damage);
         }
     }
 
