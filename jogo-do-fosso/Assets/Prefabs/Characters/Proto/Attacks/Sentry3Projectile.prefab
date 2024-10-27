@@ -188,7 +188,7 @@ MonoBehaviour:
   lifeTime: 0.333
   collide:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   owner: {fileID: 0}
 --- !u!114 &5851985245898383288
 MonoBehaviour:

@@ -42,12 +42,6 @@ public class ProtoProjectile : NetworkBehaviour
             otherCharacterHealth.TakeDamage(damage);
         }
 
-        DestroySelf();
-    }
-    
-    [ServerCallback]
-    void OnTriggerStay2D(Collider2D other) 
-    {
         if(collide.Includes(other.gameObject)){
             DestroySelf();
         }

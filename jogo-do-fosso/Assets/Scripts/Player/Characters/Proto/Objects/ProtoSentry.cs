@@ -46,11 +46,16 @@ public class ProtoSentry : CharacterSkill
 
     void Update()
     {
-        SetTarget();
+        Behaviour();
+    }
 
-        //need to check for aimRange in case of no possible targets in range
-        if(targetPosition != transform.position){
-            Aim();
+    [ServerCallback]
+    void Behaviour()
+    {
+        Vector3 targetPosition = ClosestTarget();
+
+        if(!targetPosition.Equals(Vector3.positiveInfinity)){
+            Aim(targetPosition);
 
             if(canUse){
                 Fire();
@@ -60,15 +65,9 @@ public class ProtoSentry : CharacterSkill
     }
 
     [Server]
-    void SetTarget()
+    void Aim(Vector3 position)
     {
-        targetPosition = ClosestEligibleCharacter();
-    }
-
-    [Server]
-    void Aim()
-    {
-        projectileOrigin.up = targetPosition - transform.position;
+        projectileOrigin.up = position - transform.position;
     }
 
     [Server]
@@ -80,39 +79,40 @@ public class ProtoSentry : CharacterSkill
         team.SpawnTeammate(projectile.GetComponent<TeamBehaviour>());
     }
     
-    Vector3 ClosestEligibleCharacter()
+    Vector3 ClosestTarget()
     {
-        Character[] characters = FindObjectsOfType<Character>();
+        CharacterHealth[] targets = FindObjectsOfType<CharacterHealth>();
 
         Vector3 closestCharacterPosition = Vector3.positiveInfinity;
         float mininumDistance = Mathf.Infinity;
 
-        bool ownerHasCharacter = false;
-        Character ownerCharacter = null;
+        bool ownerHasHealth = false;
+        CharacterHealth ownerHealth = null;
         if(owner){
-            ownerHasCharacter = owner.TryGetComponent<Character>(out ownerCharacter);
+            ownerHasHealth = owner.TryGetComponent<CharacterHealth>(out ownerHealth);
         }
 
-        foreach (Character character in characters){
-            if(owner && ownerHasCharacter && ownerCharacter == character){
+        foreach (CharacterHealth target in targets){
+            bool targetIsSelf = target.gameObject == gameObject;
+            bool targetIsOwner = owner && ownerHasHealth && ownerHealth == target;
+            if(targetIsSelf || targetIsOwner){
+                continue;
+            }
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, target.transform.position - transform.position, aimRange, aimLayers);
+            if(!hit){
+                continue;
+            }
+            bool targetIsObscured = hit.collider.gameObject != target.gameObject;
+            if(targetIsObscured){
                 continue;
             }
 
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, character.transform.position - transform.position, aimRange, aimLayers);
-            if(!hit || !(hit.collider.gameObject == character.gameObject)){
-                continue;
-            }
-
-            float distance = Vector3.Distance(transform.position, character.transform.position);
+            float distance = Vector3.Distance(transform.position, target.transform.position);
 
             if (distance < mininumDistance){
-                closestCharacterPosition = character.transform.position;
+                closestCharacterPosition = target.transform.position;
                 mininumDistance = distance;
             }
-        }
-
-        if(closestCharacterPosition.Equals(Vector3.positiveInfinity)){
-            return transform.position;
         }
 
         return closestCharacterPosition;
