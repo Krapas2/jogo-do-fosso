@@ -6,8 +6,6 @@ using Mirror;
 public class ProtoMelee : CharacterSkill
 {
     public ProtoPunch punchPrefab;
-    [SyncVar]
-    public float punchLength;
 
     [SyncVar]
     private ProtoPunch currentPunch;
@@ -32,6 +30,7 @@ public class ProtoMelee : CharacterSkill
         }
     }
 
+    [Client]
     void Aim()
     {
         currentPunch.transform.position = transform.position;
@@ -44,7 +43,7 @@ public class ProtoMelee : CharacterSkill
 
         punchInstance.owner = this;
 
-        NetworkServer.Spawn(punchInstance.gameObject, connectionToClient);
+        team.SpawnTeammate(punchInstance.GetComponent<TeamBehaviour>());
 
         currentPunch = punchInstance;
     }

@@ -168,6 +168,7 @@ GameObject:
   - component: {fileID: 5955806424485033964}
   - component: {fileID: 8611638440833575450}
   - component: {fileID: 4837079684982286618}
+  - component: {fileID: 1342151361178311277}
   m_Layer: 7
   m_Name: ProtoPunch
   m_TagString: Untagged
@@ -288,3 +289,21 @@ MonoBehaviour:
   knockback: 30
   lifeTime: 0.35
   owner: {fileID: 0}
+--- !u!114 &1342151361178311277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6223885006154974442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073a3871a36b1354697b179347fe7ed8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  team: 0
+  teammate: 9
+  enemy: 11

@@ -4,6 +4,7 @@ using UnityEngine;
 using Mirror;
 using System;
 
+[RequireComponent(typeof(TeamBehaviour))]
 public class ProtoSentrySpawner : CharacterSkill
 {
     [System.Serializable]
@@ -62,7 +63,7 @@ public class ProtoSentrySpawner : CharacterSkill
         currentSentry = Instantiate(sentryToSpawn, positionToSpawn, Quaternion.identity);
         currentSentry.owner = this;
 
-        NetworkServer.Spawn(currentSentry.gameObject, connectionToClient);
+        team.SpawnTeammate(currentSentry.GetComponent<TeamBehaviour>());
     }
 
     IEnumerator ListenForSentryDeath()

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
+[RequireComponent(typeof(TeamBehaviour))]
 public class PlayerManager : NetworkBehaviour
 {
     public Character character;
@@ -11,8 +12,12 @@ public class PlayerManager : NetworkBehaviour
     [HideInInspector]
     public Character currentCharacter;
 
+    private TeamBehaviour team;
+
     void Start()
     {
+        team = GetComponent<TeamBehaviour>();
+
         if(!isLocalPlayer) {
             this.enabled = false;
             return;
@@ -50,6 +55,8 @@ public class PlayerManager : NetworkBehaviour
     {
         Character characterInstance = Instantiate(character);
         characterInstance.manager = this;
-        NetworkServer.Spawn(characterInstance.gameObject, connectionToClient);
+
+        TeamBehaviour characterTeam = characterInstance.GetComponent<TeamBehaviour>();
+        team.SpawnTeammate(characterTeam);
     }
 }

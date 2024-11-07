@@ -18,7 +18,9 @@ public class ProtoSentry : CharacterSkill
     [HideInInspector]
     public Vector3 targetPosition;
 
-    void Start(){
+    protected override void Start(){
+        team = GetComponent<TeamBehaviour>();
+
         if(isOwned){
             StartCoroutine(WaitForOwnerDeath());
         }
@@ -75,7 +77,7 @@ public class ProtoSentry : CharacterSkill
         SentryProjectile projectile = Instantiate(projectilePrefab, projectileOrigin.position, projectileOrigin.rotation);
 
         projectile.owner = this;
-        NetworkServer.Spawn(projectile.gameObject);
+        team.SpawnTeammate(projectile.GetComponent<TeamBehaviour>());
     }
     
     Vector3 ClosestEligibleCharacter()
