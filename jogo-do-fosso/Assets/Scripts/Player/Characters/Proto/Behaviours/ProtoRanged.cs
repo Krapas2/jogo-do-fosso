@@ -39,6 +39,6 @@ public class ProtoRanged : CharacterSkill
         ProtoProjectile projectile = Instantiate(projectilePrefab, projectileOrigin.position, projectileOrigin.rotation);
 
         projectile.owner = this;
-        NetworkServer.Spawn(projectile.gameObject);
+        team.SpawnTeammate(projectile.GetComponent<TeamBehaviour>());
     }
 }

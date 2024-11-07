@@ -47,6 +47,7 @@ GameObject:
   - component: {fileID: 2813726867418942948}
   - component: {fileID: -7673144377403802262}
   - component: {fileID: 4902265646030851901}
+  - component: {fileID: 4302086200991764192}
   m_Layer: 0
   m_Name: Sentry3
   m_TagString: Untagged
@@ -276,6 +277,7 @@ MonoBehaviour:
   cooldown: 0.25
   cooldownProgress: 0
   canUse: 0
+  team: {fileID: 0}
   projectilePrefab: {fileID: -4311401564493829459, guid: 5921be4c757cf814c9692bc890ef126d, type: 3}
   projectileOrigin: {fileID: 7467152679717624035}
   aimRange: 5
@@ -284,3 +286,21 @@ MonoBehaviour:
     m_Bits: 8
   owner: {fileID: 0}
   targetPosition: {x: 0, y: 0, z: 0}
+--- !u!114 &4302086200991764192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3480126238383694925}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073a3871a36b1354697b179347fe7ed8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  team: 0
+  teammate: 9
+  enemy: 11

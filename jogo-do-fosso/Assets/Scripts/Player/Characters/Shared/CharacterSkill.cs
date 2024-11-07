@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
+[RequireComponent(typeof(TeamBehaviour))]
 public class CharacterSkill : NetworkBehaviour
 {
 
@@ -15,9 +16,14 @@ public class CharacterSkill : NetworkBehaviour
     [SyncVar]
     [HideInInspector]
     public bool canUse;
+    
+    [HideInInspector]
+    public TeamBehaviour team;
 
     void Awake()
     {
+        team = GetComponent<TeamBehaviour>();
+
         cooldownProgress = cooldown;
         canUse = true;
     }
