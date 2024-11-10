@@ -13,6 +13,11 @@ public class ProtoPunch : NetworkBehaviour
     [SyncVar]
     public float lifeTime;
 
+    [SyncVar]
+    public LayerMask ignoreDamage;
+    [SyncVar]
+    public LayerMask ignoreKnockback;
+
     [HideInInspector]
     [SyncVar]
     public ProtoMelee owner;
@@ -52,22 +57,33 @@ public class ProtoPunch : NetworkBehaviour
         }
     }
 
-    [ServerCallback]
+    [ClientCallback]
     void OnTriggerEnter2D(Collider2D other) 
     {
-        if(other.gameObject == owner.gameObject || previouslyHit.Contains(other)){
+        if(!isOwned){
+            return;
+        }
+        
+        bool otherIsOwner = other.gameObject == owner.gameObject || previouslyHit.Contains(other);
+        bool otherHasBeenHit = previouslyHit.Contains(other);
+        if(otherIsOwner || otherHasBeenHit){
             return;
         }
 
         if(other.gameObject.TryGetComponent<NetworkIdentity>(out NetworkIdentity otherIdentity)){
             Vector2 direction = transform.up;
 
-            Knockback(otherIdentity, direction * knockback);
-            Damage(otherIdentity, damage);
+            if(!ignoreKnockback.Includes(other.gameObject)){
+                Knockback(otherIdentity, direction * knockback);
+            }
+            if(!ignoreDamage.Includes(other.gameObject)){
+                Damage(otherIdentity, damage);
+            }
             previouslyHit.Add(other);
         }
     }
 
+    [Command]
     void Damage(NetworkIdentity other, float damage)
     {
         if(other.gameObject.TryGetComponent<CharacterHealth>(out CharacterHealth characterHealth)){
@@ -75,7 +91,7 @@ public class ProtoPunch : NetworkBehaviour
         }
     }
 
-    [Server]
+    [Command]
     void Knockback(NetworkIdentity other, Vector2 vector)
     {
         if(other.gameObject.TryGetComponent<Rigidbody2D>(out Rigidbody2D rigidbody)){

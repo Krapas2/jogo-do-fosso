@@ -13,8 +13,8 @@ GameObject:
   - component: {fileID: 4095936836855863273}
   - component: {fileID: 413363598954544771}
   - component: {fileID: 3551219996612574014}
-  - component: {fileID: 2993718299385168581}
   - component: {fileID: 5582675089788034589}
+  - component: {fileID: 2993718299385168581}
   m_Layer: 0
   m_Name: ProtoProjectile
   m_TagString: Untagged
@@ -168,28 +168,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &2993718299385168581
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5089950848276985383}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5ab6eb81f0204d458a8213cc33b35a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
-  damage: 4
-  speed: 30
-  lifeTime: 0.275
-  collide:
-    serializedVersion: 2
-    m_Bits: 64
-  owner: {fileID: 0}
 --- !u!114 &5582675089788034589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -208,3 +186,28 @@ MonoBehaviour:
   team: 0
   teammate: 9
   enemy: 11
+--- !u!114 &2993718299385168581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5089950848276985383}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5ab6eb81f0204d458a8213cc33b35a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  damage: 4
+  speed: 30
+  lifeTime: 0.275
+  ignore:
+    serializedVersion: 2
+    m_Bits: 768
+  destroyOnTouch:
+    serializedVersion: 2
+    m_Bits: 1088
+  owner: {fileID: 0}

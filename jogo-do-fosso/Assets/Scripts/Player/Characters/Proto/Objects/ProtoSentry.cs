@@ -8,7 +8,7 @@ public class ProtoSentry : CharacterSkill
     public SentryProjectile projectilePrefab;
     public Transform projectileOrigin;
     public float aimRange;
-    public LayerMask aimLayers;
+    public LayerMask ignore;
 
     [SyncVar]
     [HideInInspector]
@@ -19,38 +19,25 @@ public class ProtoSentry : CharacterSkill
     public Vector3 targetPosition;
 
     protected override void Start(){
-        team = GetComponent<TeamBehaviour>();
-
-        if(isOwned){
-            StartCoroutine(WaitForOwnerDeath());
-        }
-    }
-    
-    [Client]
-    IEnumerator WaitForOwnerDeath()
-    {
-        yield return new WaitUntil(CheckOwner);
-        CmdDestroySelf(); 
-    }
-
-    bool CheckOwner()
-    {
-        return !owner || !owner.enabled;
-    }
-
-    [Command]
-    public void CmdDestroySelf()
-    {
-        NetworkServer.Destroy(gameObject);
+        base.Start();
     }
 
     void Update()
     {
-        SetTarget();
+        Debug.Log("madeit");
+        if(!CheckOwner()){
+            CmdDestroySelf(); 
+        }
+        Behaviour();
+    }
 
-        //need to check for aimRange in case of no possible targets in range
-        if(targetPosition != transform.position){
-            Aim();
+    [ClientCallback]
+    void Behaviour()
+    {
+        Vector3 targetPosition = ClosestTarget();
+
+        if(!targetPosition.Equals(Vector3.positiveInfinity)){
+            Aim(targetPosition);
 
             if(canUse){
                 Fire();
@@ -59,19 +46,13 @@ public class ProtoSentry : CharacterSkill
         }
     }
 
-    [Server]
-    void SetTarget()
+    [Command]
+    void Aim(Vector3 position)
     {
-        targetPosition = ClosestEligibleCharacter();
+        projectileOrigin.up = position - transform.position;
     }
 
-    [Server]
-    void Aim()
-    {
-        projectileOrigin.up = targetPosition - transform.position;
-    }
-
-    [Server]
+    [Command]
     void Fire()
     {
         SentryProjectile projectile = Instantiate(projectilePrefab, projectileOrigin.position, projectileOrigin.rotation);
@@ -80,41 +61,42 @@ public class ProtoSentry : CharacterSkill
         team.SpawnTeammate(projectile.GetComponent<TeamBehaviour>());
     }
     
-    Vector3 ClosestEligibleCharacter()
+    Vector3 ClosestTarget()
     {
-        Character[] characters = FindObjectsOfType<Character>();
+        CharacterHealth[] targets = FindObjectsOfType<CharacterHealth>();
 
         Vector3 closestCharacterPosition = Vector3.positiveInfinity;
         float mininumDistance = Mathf.Infinity;
 
-        bool ownerHasCharacter = false;
-        Character ownerCharacter = null;
-        if(owner){
-            ownerHasCharacter = owner.TryGetComponent<Character>(out ownerCharacter);
-        }
-
-        foreach (Character character in characters){
-            if(owner && ownerHasCharacter && ownerCharacter == character){
+        foreach (CharacterHealth target in targets){
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, target.transform.position - transform.position, aimRange, ignore.Inverse());
+            if(!hit){
+                continue;
+            }
+            bool targetIsObscured = hit.collider.gameObject != target.gameObject;
+            if(targetIsObscured){
                 continue;
             }
 
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, character.transform.position - transform.position, aimRange, aimLayers);
-            if(!hit || !(hit.collider.gameObject == character.gameObject)){
-                continue;
-            }
-
-            float distance = Vector3.Distance(transform.position, character.transform.position);
+            float distance = Vector3.Distance(transform.position, target.transform.position);
 
             if (distance < mininumDistance){
-                closestCharacterPosition = character.transform.position;
+                closestCharacterPosition = target.transform.position;
                 mininumDistance = distance;
             }
         }
 
-        if(closestCharacterPosition.Equals(Vector3.positiveInfinity)){
-            return transform.position;
-        }
-
         return closestCharacterPosition;
+    }
+
+    bool CheckOwner()
+    {
+        return owner && owner.enabled;
+    }
+
+    [Command]
+    public void CmdDestroySelf()
+    {
+        NetworkServer.Destroy(gameObject);
     }
 }

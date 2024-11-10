@@ -8,4 +8,9 @@ public static class LayerMaskExtensionMethods
     {
         return (layerMask & (1 << gameObject.layer)) != 0;
     }
+
+    public static LayerMask Inverse(this LayerMask layerMask)
+    {
+        return ~layerMask | LayerMask.GetMask("All");
+    }
 }

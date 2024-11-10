@@ -270,6 +270,7 @@ GameObject:
   - component: {fileID: 9092953593825701662}
   - component: {fileID: 976780453161735373}
   - component: {fileID: -3875696985888235369}
+  - component: {fileID: 1827711396826391153}
   - component: {fileID: -5404135925566300329}
   - component: {fileID: -3448187068477018330}
   - component: {fileID: -2715180394725550360}
@@ -279,7 +280,6 @@ GameObject:
   - component: {fileID: 6770122621111299099}
   - component: {fileID: 7179803912739190303}
   - component: {fileID: 5338311785227138464}
-  - component: {fileID: 1827711396826391153}
   m_Layer: 3
   m_Name: ProtoPlayer
   m_TagString: Untagged
@@ -509,6 +509,24 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   manager: {fileID: 0}
+--- !u!114 &1827711396826391153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9085072672143096352}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073a3871a36b1354697b179347fe7ed8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  team: 0
+  teammate: 8
+  enemy: 10
 --- !u!114 &-5404135925566300329
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -655,7 +673,6 @@ MonoBehaviour:
   canUse: 0
   team: {fileID: 0}
   punchPrefab: {fileID: 4837079684982286618, guid: a76bbec5351380445b43291bd1175d6c, type: 3}
-  punchLength: 0.5
 --- !u!114 &5338311785227138464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -682,21 +699,3 @@ MonoBehaviour:
     cooldown: 2
   - sentry: {fileID: 4902265646030851901, guid: 82c161006ca1ffe40b29cf759c4c0a77, type: 3}
     cooldown: 3
---- !u!114 &1827711396826391153
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9085072672143096352}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 073a3871a36b1354697b179347fe7ed8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0
-  team: 0
-  teammate: 8
-  enemy: 10
