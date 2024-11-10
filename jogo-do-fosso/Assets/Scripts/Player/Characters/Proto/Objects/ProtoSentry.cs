@@ -8,7 +8,7 @@ public class ProtoSentry : CharacterSkill
     public SentryProjectile projectilePrefab;
     public Transform projectileOrigin;
     public float aimRange;
-    public LayerMask aimLayers;
+    public LayerMask ignore;
 
     [SyncVar]
     [HideInInspector]
@@ -19,37 +19,19 @@ public class ProtoSentry : CharacterSkill
     public Vector3 targetPosition;
 
     protected override void Start(){
-        team = GetComponent<TeamBehaviour>();
-
-        if(isOwned){
-            StartCoroutine(WaitForOwnerDeath());
-        }
-    }
-    
-    [Client]
-    IEnumerator WaitForOwnerDeath()
-    {
-        yield return new WaitUntil(CheckOwner);
-        CmdDestroySelf(); 
-    }
-
-    bool CheckOwner()
-    {
-        return !owner || !owner.enabled;
-    }
-
-    [Command]
-    public void CmdDestroySelf()
-    {
-        NetworkServer.Destroy(gameObject);
+        base.Start();
     }
 
     void Update()
     {
+        Debug.Log("madeit");
+        if(!CheckOwner()){
+            CmdDestroySelf(); 
+        }
         Behaviour();
     }
 
-    [ServerCallback]
+    [ClientCallback]
     void Behaviour()
     {
         Vector3 targetPosition = ClosestTarget();
@@ -64,13 +46,13 @@ public class ProtoSentry : CharacterSkill
         }
     }
 
-    [Server]
+    [Command]
     void Aim(Vector3 position)
     {
         projectileOrigin.up = position - transform.position;
     }
 
-    [Server]
+    [Command]
     void Fire()
     {
         SentryProjectile projectile = Instantiate(projectilePrefab, projectileOrigin.position, projectileOrigin.rotation);
@@ -86,19 +68,8 @@ public class ProtoSentry : CharacterSkill
         Vector3 closestCharacterPosition = Vector3.positiveInfinity;
         float mininumDistance = Mathf.Infinity;
 
-        bool ownerHasHealth = false;
-        CharacterHealth ownerHealth = null;
-        if(owner){
-            ownerHasHealth = owner.TryGetComponent<CharacterHealth>(out ownerHealth);
-        }
-
         foreach (CharacterHealth target in targets){
-            bool targetIsSelf = target.gameObject == gameObject;
-            bool targetIsOwner = owner && ownerHasHealth && ownerHealth == target;
-            if(targetIsSelf || targetIsOwner){
-                continue;
-            }
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, target.transform.position - transform.position, aimRange, aimLayers);
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, target.transform.position - transform.position, aimRange, ignore.Inverse());
             if(!hit){
                 continue;
             }
@@ -116,5 +87,16 @@ public class ProtoSentry : CharacterSkill
         }
 
         return closestCharacterPosition;
+    }
+
+    bool CheckOwner()
+    {
+        return owner && owner.enabled;
+    }
+
+    [Command]
+    public void CmdDestroySelf()
+    {
+        NetworkServer.Destroy(gameObject);
     }
 }

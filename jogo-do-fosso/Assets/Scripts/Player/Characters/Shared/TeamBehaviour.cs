@@ -31,7 +31,7 @@ public class TeamBehaviour : NetworkBehaviour
         //temporary random team assignment
         //change this to always assign undefined when team selection exists
         // remmove system from imports too btw
-        if (isPlayerManager){
+        if (isPlayerManager && isOwned){
             var values = Enum.GetValues(typeof(Team));
             int playerCount = FindObjectsOfType<PlayerManager>().Length;
             team = (Team)values.GetValue((playerCount % 3) + 1);
