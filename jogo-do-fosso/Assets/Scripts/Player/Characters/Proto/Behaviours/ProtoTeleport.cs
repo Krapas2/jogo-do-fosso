@@ -30,7 +30,12 @@ public class ProtoTeleport : CharacterSkill
 
     void Update()
     {
-        if(Input.GetButtonDown("Fire2") && canUse){
+        if(!protoSentrySpawner.currentSentry)
+        {
+            return;
+        }
+
+        if(Input.GetButtonDown("Fire2")){
             Prepare();
         }
 
