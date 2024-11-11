@@ -130,7 +130,7 @@ MonoBehaviour:
   proto: {fileID: 0}
   meleeBar: {fileID: 5153895417017936178}
   rangedBar: {fileID: 1484088342671465671}
-  dashBar: {fileID: 301922347914802097}
+  teleportBar: {fileID: 301922347914802097}
   sentryBar: {fileID: 1602125042194234507}
 --- !u!1 &2199242855377722322
 GameObject:
@@ -294,7 +294,7 @@ GameObject:
   - component: {fileID: 1558261082287789739}
   - component: {fileID: 301922347914802097}
   m_Layer: 5
-  m_Name: DashBar
+  m_Name: TeleportBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

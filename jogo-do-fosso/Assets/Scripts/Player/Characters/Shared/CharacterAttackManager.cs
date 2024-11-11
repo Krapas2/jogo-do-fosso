@@ -8,13 +8,15 @@ public class CharacterAttackManager : NetworkBehaviour
 
     public CharacterSkill[] attacks;
 
+    private int lastUsedSkillIndex;
+
     void Start()
     {
         if (!isOwned){
             this.enabled = false;
         }
         
-        SelectAttack(0);
+        SelectSkill(0);
     }
 
     void Update()
@@ -26,15 +28,30 @@ public class CharacterAttackManager : NetworkBehaviour
     {
         for(int i = 0; i < attacks.Length; i++){
             if(Input.GetButton(string.Concat("SelectAttack", i+1))){
-                SelectAttack(i);
+                SelectSkill(i);
             }
         }
     }
 
-    void SelectAttack(int selected)
+    void SelectSkill(int selected)
     {
         for(int i = 0; i < attacks.Length; i++){
             attacks[i].enabled = (i == selected);
+        }
+        lastUsedSkillIndex = selected;
+    }
+
+    public void DisableAllSkills()
+    {
+        for(int i = 0; i < attacks.Length; i++){
+            attacks[i].enabled = false;
+        }
+    }
+
+    public void EnableLastUsedSkill()
+    {
+        for(int i = 0; i < attacks.Length; i++){
+            attacks[i].enabled = (i == lastUsedSkillIndex);
         }
     }
 }

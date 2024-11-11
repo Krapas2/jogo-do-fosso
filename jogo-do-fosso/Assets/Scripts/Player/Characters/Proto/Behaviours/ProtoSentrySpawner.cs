@@ -20,7 +20,9 @@ public class ProtoSentrySpawner : CharacterSkill
 
     public SentryLevel[] sentryLevels;
 
-    private ProtoSentry currentSentry;
+    [SyncVar]
+    [HideInInspector]
+    public ProtoSentry currentSentry;
     [SyncVar]
     private int nextSentryLevel;
 

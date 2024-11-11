@@ -24,7 +24,6 @@ public class ProtoSentry : CharacterSkill
 
     void Update()
     {
-        Debug.Log("madeit");
         if(!CheckOwner()){
             CmdDestroySelf(); 
         }

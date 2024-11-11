@@ -15,7 +15,7 @@ public class ProtoRanged : CharacterSkill
     {
         base.Start();
 
-        cameraData = FindObjectOfType<CameraData>();
+        cameraData = Camera.main.GetComponent<CameraData>();
     }
 
     void Update()
