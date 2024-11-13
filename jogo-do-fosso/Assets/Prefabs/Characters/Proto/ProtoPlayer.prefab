@@ -526,7 +526,7 @@ MonoBehaviour:
   syncInterval: 0
   team: 0
   teammate: 8
-  enemy: 10
+  enemy: 9
 --- !u!114 &-5404135925566300329
 MonoBehaviour:
   m_ObjectHideFlags: 0

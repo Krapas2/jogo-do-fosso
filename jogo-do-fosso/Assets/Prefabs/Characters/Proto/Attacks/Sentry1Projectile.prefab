@@ -184,8 +184,8 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   team: 0
-  teammate: 9
-  enemy: 11
+  teammate: 12
+  enemy: 13
 --- !u!114 &3416529367793788124
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,7 +206,8 @@ MonoBehaviour:
   lifeTime: 1
   ignore:
     serializedVersion: 2
-    m_Bits: 768
+    m_Bits: 5376
   destroyOnTouch:
     serializedVersion: 2
-    m_Bits: 3136
+    m_Bits: 2624
+  owner: {fileID: 0}

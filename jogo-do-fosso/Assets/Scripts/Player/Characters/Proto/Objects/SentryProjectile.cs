@@ -54,15 +54,6 @@ public class SentryProjectile : NetworkBehaviour
 
             Damage(otherIdentity, damage);
         }
-    }
-
-    [ServerCallback]
-    void OnTriggerStay2D(Collider2D other)
-    {
-        bool otherIsOwner = owner && other.gameObject == owner.gameObject;
-        if(otherIsOwner){
-            return;
-        }
         
         if(destroyOnTouch.Includes(other.gameObject)){
             Invoke(nameof(CmdDestroySelf),.01f);

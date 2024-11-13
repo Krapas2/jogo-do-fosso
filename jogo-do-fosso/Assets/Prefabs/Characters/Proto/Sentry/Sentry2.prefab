@@ -366,7 +366,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   team: 0
-  teammate: 9
+  teammate: 10
   enemy: 11
 --- !u!114 &5346078993417370310
 MonoBehaviour:
@@ -409,7 +409,7 @@ MonoBehaviour:
   aimRange: 6
   ignore:
     serializedVersion: 2
-    m_Bits: 768
+    m_Bits: 5376
   owner: {fileID: 0}
   targetPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &6237542665551507843
