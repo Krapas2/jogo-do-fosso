@@ -3,17 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
+[RequireComponent(typeof(TeamBehaviour))]
+[RequireComponent(typeof(ProtoSentrySpawner))]
 public class ProtoRanged : CharacterSkill
 {
     public ProtoProjectile projectilePrefab;
     public Transform projectileOrigin;
 
-    private CameraData cameraData;
+    private ProtoSentrySpawner protoSentrySpawner;
 
+    private CameraData cameraData;
 
     protected override void Start()
     {
         base.Start();
+
+        protoSentrySpawner = GetComponent<ProtoSentrySpawner>();
 
         cameraData = Camera.main.GetComponent<CameraData>();
     }
@@ -39,6 +44,7 @@ public class ProtoRanged : CharacterSkill
         ProtoProjectile projectile = Instantiate(projectilePrefab, projectileOrigin.position, projectileOrigin.rotation);
 
         projectile.owner = this;
+        projectile.protoSentrySpawner = protoSentrySpawner;
         team.SpawnTeammate(projectile.GetComponent<TeamBehaviour>());
     }
 }

@@ -12,11 +12,11 @@ public class ProtoSentry : CharacterSkill
 
     [SyncVar]
     [HideInInspector]
-    public ProtoSentrySpawner owner;
+    public Transform overrideTarget;
 
     [SyncVar]
     [HideInInspector]
-    public Vector3 targetPosition;
+    public ProtoSentrySpawner owner;
 
     protected override void Start(){
         base.Start();
@@ -33,7 +33,7 @@ public class ProtoSentry : CharacterSkill
     [ClientCallback]
     void Behaviour()
     {
-        Vector3 targetPosition = ClosestTarget();
+        Vector3 targetPosition = overrideTarget != null ? overrideTarget.position : ClosestTarget();
 
         if(!targetPosition.Equals(Vector3.positiveInfinity)){
             Aim(targetPosition);
@@ -91,6 +91,20 @@ public class ProtoSentry : CharacterSkill
     bool CheckOwner()
     {
         return owner && owner.enabled;
+    }
+
+    [Client]
+    public void OverrideTarget(Transform target, float length)
+    {
+        StartCoroutine(OverrideTargetRoutine(target, length));
+    }
+
+    [Client]
+    public IEnumerator OverrideTargetRoutine(Transform target, float length)
+    {
+        overrideTarget = target;
+        yield return new WaitForSeconds(length);
+        overrideTarget = null;
     }
 
     [Command]

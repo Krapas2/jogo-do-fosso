@@ -25,6 +25,7 @@ public class SentryProjectile : NetworkBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        rb.velocity = transform.up * speed;
 
         if(isOwned){
             Invoke(nameof(CmdDestroySelf), lifeTime);
@@ -33,7 +34,7 @@ public class SentryProjectile : NetworkBehaviour
 
     void Update ()
     {
-        rb.velocity = transform.up * speed;
+        transform.up = rb.velocity;
     }
     
     [ClientCallback]
