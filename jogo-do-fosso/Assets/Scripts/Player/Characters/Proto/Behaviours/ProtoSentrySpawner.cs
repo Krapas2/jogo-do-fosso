@@ -62,10 +62,12 @@ public class ProtoSentrySpawner : CharacterSkill
             NetworkServer.Destroy(currentSentry.gameObject);
         }
 
-        currentSentry = Instantiate(sentryToSpawn, positionToSpawn, Quaternion.identity);
-        currentSentry.owner = this;
+        ProtoSentry spawnedSentry = Instantiate(sentryToSpawn, positionToSpawn, Quaternion.identity);
+        spawnedSentry.owner = this;
 
-        team.SpawnTeammate(currentSentry.GetComponent<TeamBehaviour>());
+        team.SpawnTeammate(spawnedSentry.GetComponent<TeamBehaviour>());
+
+        currentSentry = spawnedSentry;
     }
 
     IEnumerator ListenForSentryDeath()
