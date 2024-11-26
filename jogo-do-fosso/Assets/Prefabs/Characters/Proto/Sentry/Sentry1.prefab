@@ -289,9 +289,9 @@ MonoBehaviour:
   aimRange: 8
   ignore:
     serializedVersion: 2
-    m_Bits: 5376
+    m_Bits: 13568
+  overrideTarget: {fileID: 0}
   owner: {fileID: 0}
-  targetPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &3603421732858389090
 GameObject:
   m_ObjectHideFlags: 0
