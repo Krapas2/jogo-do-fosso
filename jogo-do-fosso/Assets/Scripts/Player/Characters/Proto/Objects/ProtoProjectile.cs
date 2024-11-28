@@ -13,18 +13,27 @@ public class ProtoProjectile : NetworkBehaviour
     [SyncVar]
     public float lifeTime;
     [SyncVar]
-    public LayerMask ignore;
+    public float overrideSentryTargetLength;
+    [SyncVar]
+    public LayerMask ignoreDamage;
+    [SyncVar]
+    public LayerMask ignoreOverrideSentryTarget;
     [SyncVar]
     public LayerMask destroyOnTouch;
 
     [HideInInspector]
+    [SyncVar]
     public ProtoRanged owner;
+    [HideInInspector]
+    [SyncVar]
+    public ProtoSentrySpawner protoSentrySpawner;
 
     private Rigidbody2D rb;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        rb.velocity = transform.up * speed;
 
         if(isOwned){
             Invoke(nameof(CmdDestroySelf), lifeTime);
@@ -33,7 +42,7 @@ public class ProtoProjectile : NetworkBehaviour
 
     void Update ()
     {
-        rb.velocity = transform.up * speed;
+        transform.up = rb.velocity;
     }
     
     [ClientCallback]
@@ -44,26 +53,26 @@ public class ProtoProjectile : NetworkBehaviour
         }
 
         bool otherIsOwner = owner && other.gameObject == owner.gameObject;
-        bool otherIsIgnored = ignore.Includes(other.gameObject);
-        if(otherIsOwner || otherIsIgnored){
+        if(otherIsOwner){
             return;
         }
+        Debug.Log(owner);
         
         if(other.gameObject.TryGetComponent<NetworkIdentity>(out NetworkIdentity otherIdentity)){
             Vector2 direction = transform.up;
 
-            Damage(otherIdentity, damage);
-        }
-    }
+            bool otherIgnoresDamage = ignoreDamage.Includes(other.gameObject);
+            if(!otherIgnoresDamage){
+                Damage(otherIdentity, damage);
+            }
 
-    [ServerCallback]
-    void OnTriggerStay2D(Collider2D other)
-    {
-        bool otherIsOwner = owner && other.gameObject == owner.gameObject;
-        if(otherIsOwner){
-            return;
+            bool otherIgnoresOverrideSentryTarget = ignoreOverrideSentryTarget.Includes(other.gameObject);
+            bool currentSentryExists = protoSentrySpawner.currentSentry != null;
+            if(!otherIgnoresOverrideSentryTarget && currentSentryExists){
+                protoSentrySpawner.currentSentry.OverrideTarget(other.transform, overrideSentryTargetLength);
+            }
         }
-        
+
         if(destroyOnTouch.Includes(other.gameObject)){
             Invoke(nameof(CmdDestroySelf),.01f);
         }

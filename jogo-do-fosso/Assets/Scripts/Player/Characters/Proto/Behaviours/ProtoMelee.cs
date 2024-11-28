@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Mirror;
 
+[RequireComponent(typeof(TeamBehaviour))]
 public class ProtoMelee : CharacterSkill
 {
     public ProtoPunch punchPrefab;

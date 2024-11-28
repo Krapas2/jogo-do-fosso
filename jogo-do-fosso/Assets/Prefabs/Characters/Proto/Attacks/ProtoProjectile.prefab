@@ -184,8 +184,8 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   team: 0
-  teammate: 9
-  enemy: 11
+  teammate: 12
+  enemy: 13
 --- !u!114 &2993718299385168581
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,12 +202,17 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0
   damage: 4
-  speed: 30
-  lifeTime: 0.275
-  ignore:
+  speed: 20
+  lifeTime: 0.4
+  overrideSentryTargetLength: 5
+  ignoreDamage:
     serializedVersion: 2
-    m_Bits: 768
+    m_Bits: 5376
+  ignoreOverrideSentryTarget:
+    serializedVersion: 2
+    m_Bits: 13823
   destroyOnTouch:
     serializedVersion: 2
-    m_Bits: 1088
+    m_Bits: 2624
   owner: {fileID: 0}
+  protoSentrySpawner: {fileID: 0}

@@ -74,17 +74,18 @@ public class ProtoPunch : NetworkBehaviour
             Vector2 direction = transform.up;
 
             if(!ignoreKnockback.Includes(other.gameObject)){
-                Knockback(otherIdentity, direction * knockback);
+                CmdKnockback(otherIdentity, direction * knockback);
             }
             if(!ignoreDamage.Includes(other.gameObject)){
-                Damage(otherIdentity, damage);
+                CmdDamage(otherIdentity, damage);
             }
+
             previouslyHit.Add(other);
         }
     }
 
     [Command]
-    void Damage(NetworkIdentity other, float damage)
+    void CmdDamage(NetworkIdentity other, float damage)
     {
         if(other.gameObject.TryGetComponent<CharacterHealth>(out CharacterHealth characterHealth)){
             characterHealth.TakeDamage(damage);
@@ -92,7 +93,7 @@ public class ProtoPunch : NetworkBehaviour
     }
 
     [Command]
-    void Knockback(NetworkIdentity other, Vector2 vector)
+    void CmdKnockback(NetworkIdentity other, Vector2 vector)
     {
         if(other.gameObject.TryGetComponent<Rigidbody2D>(out Rigidbody2D rigidbody)){
             rigidbody.velocity = vector;

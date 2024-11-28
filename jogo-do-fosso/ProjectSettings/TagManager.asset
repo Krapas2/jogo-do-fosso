@@ -13,12 +13,12 @@ TagManager:
   - UI
   - Scene
   - Skill
-  - LocalTeamCharacter
-  - LocalTeamObject
-  - LocalEnemyCharacter
-  - LocalEnemyObject
-  - 
-  - 
+  - Team Character
+  - Enemy Character
+  - Team Object
+  - Enemy Object
+  - Team Skill
+  - Enemy Skill
   - 
   - 
   - 
