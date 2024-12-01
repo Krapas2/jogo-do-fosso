@@ -29,6 +29,7 @@ public class ProtoMelee : CharacterSkill
         }
         if (Input.GetButtonDown("Fire1") && !currentPunch && canUse) {
             CmdSpawnPunch(relativeMousePosition);
+            StartCoroutine(Cooldown());
         }
     }
 

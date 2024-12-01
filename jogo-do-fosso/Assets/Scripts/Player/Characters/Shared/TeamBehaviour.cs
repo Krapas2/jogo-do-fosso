@@ -61,15 +61,45 @@ public class TeamBehaviour : NetworkBehaviour
     [Client]
     public void SetupTeam()
     {
+        SetTeamLayer();
+        SetTeamColor();
+    }
+
+    void SetTeamColor()
+    {
+        if(TryGetComponent<SpriteRenderer>(out SpriteRenderer sprite)){
+            Color color;
+            switch(team) 
+            {
+                case Team.Red:
+                    color = Color.red;
+                    break;
+                case Team.Grin:
+                    color = Color.green;
+                    break;
+                case Team.Blu:
+                    color = Color.blue;
+                    break;
+                default:
+                    color = Color.gray;
+                    break;
+            }
+            sprite.color = color;
+        }
+    }
+
+    void SetTeamLayer()
+    {
         GameObject localPlayer = NetworkClient.localPlayer.gameObject;
         Team localPlayerTeam = localPlayer.GetComponent<TeamBehaviour>().team;
 
+        int layerToSet;
         if (localPlayerTeam == team){
-            gameObject.layer = teammate;
+            layerToSet = teammate;
+        } else {
+            layerToSet = enemy;
         }
-        else{
-            gameObject.layer = enemy;
-        }
+        gameObject.layer = layerToSet;
     }
 
     public void SpawnTeammate(TeamBehaviour objectToSpawn)

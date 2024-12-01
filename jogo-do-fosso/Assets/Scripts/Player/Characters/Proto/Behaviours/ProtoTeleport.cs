@@ -8,6 +8,7 @@ using Mirror;
 public class ProtoTeleport : CharacterSkill
 {
     public float range;
+    public LayerMask ignore;
 
     private bool teleporting;
 
@@ -81,6 +82,9 @@ public class ProtoTeleport : CharacterSkill
     {
         Vector3 sentryPosition = protoSentrySpawner.currentSentry.transform.position;
         Vector3 vectorFromSentry = Vector3.ClampMagnitude(position - sentryPosition, range);
-        transform.position = vectorFromSentry + sentryPosition;
+
+        Vector3 positionToSet = vectorFromSentry + sentryPosition;
+
+        transform.position = positionToSet;
     }
 }
