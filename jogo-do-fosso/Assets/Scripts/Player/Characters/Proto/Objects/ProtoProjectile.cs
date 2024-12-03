@@ -56,7 +56,6 @@ public class ProtoProjectile : NetworkBehaviour
         if(otherIsOwner){
             return;
         }
-        Debug.Log(owner);
         
         if(other.gameObject.TryGetComponent<NetworkIdentity>(out NetworkIdentity otherIdentity)){
             Vector2 direction = transform.up;

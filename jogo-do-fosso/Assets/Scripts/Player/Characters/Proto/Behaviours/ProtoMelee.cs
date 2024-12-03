@@ -16,31 +16,34 @@ public class ProtoMelee : CharacterSkill
     protected override void Start()
     {
         base.Start();
-        
+
         cameraData = Camera.main.GetComponent<CameraData>();
     }
 
     void Update()
     {
-        if(currentPunch){
-            Aim();
-        }
+        Vector2 relativeMousePosition = cameraData.worldMousePosition - transform.position.Vector2();
 
-        if(Input.GetButtonDown("Fire1") && !currentPunch && canUse){
-            CmdSpawnPunch();
+        if (currentPunch) {
+            Aim(relativeMousePosition);
+        }
+        if (Input.GetButtonDown("Fire1") && !currentPunch && canUse) {
+            CmdSpawnPunch(relativeMousePosition);
         }
     }
 
     [Client]
-    void Aim()
+    void Aim(Vector2 direction)
     {
         currentPunch.transform.position = transform.position;
-        currentPunch.transform.up = cameraData.worldMousePosition - transform.position.Vector2();
+        currentPunch.transform.up = direction;
     }
 
     [Command]
-    void CmdSpawnPunch(){
+    void CmdSpawnPunch(Vector2 direction)
+    {
         ProtoPunch punchInstance = Instantiate(punchPrefab, transform.position, Quaternion.identity);
+        punchInstance.transform.up = direction;
 
         punchInstance.owner = this;
 
