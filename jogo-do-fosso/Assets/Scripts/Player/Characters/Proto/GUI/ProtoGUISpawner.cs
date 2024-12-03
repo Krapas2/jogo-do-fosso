@@ -10,11 +10,12 @@ public class ProtoGUISpawner : NetworkBehaviour
 
     void Start()
     {
-        if(isOwned){
+        if (isOwned)
+        {
             Canvas canvas = FindObjectOfType<Canvas>();
 
             ProtoGUI spawnedProtoGUI = Instantiate(protoGUI, canvas.transform);
-            spawnedProtoGUI.proto = GetComponent<Character>();
+            spawnedProtoGUI.proto = gameObject;
         }
     }
 }

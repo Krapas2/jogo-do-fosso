@@ -66,7 +66,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  character: {fileID: -3875696985888235369, guid: f7dedb7603f252af8a062363b1168339, type: 3}
+  character: {fileID: 9085072672143096352, guid: f7dedb7603f252af8a062363b1168339, type: 3}
   respawnCooldown: 2
   currentCharacter: {fileID: 0}
 --- !u!114 &-7434311681659026110
