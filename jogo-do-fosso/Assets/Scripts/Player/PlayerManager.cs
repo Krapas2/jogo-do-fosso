@@ -6,11 +6,12 @@ using Mirror;
 [RequireComponent(typeof(TeamBehaviour))]
 public class PlayerManager : NetworkBehaviour
 {
-    public Character character;
+    public GameObject character;
     public float respawnCooldown;
 
     [HideInInspector]
-    public Character currentCharacter;
+    [SyncVar]
+    public GameObject currentCharacter;
 
     private TeamBehaviour team;
 
@@ -18,15 +19,16 @@ public class PlayerManager : NetworkBehaviour
     {
         team = GetComponent<TeamBehaviour>();
 
-        if(!isLocalPlayer) {
+        if (!isLocalPlayer)
+        {
             this.enabled = false;
             return;
         }
-        
+
         StartCoroutine(SpawnRoutine());
     }
 
-    IEnumerator SpawnRoutine() 
+    IEnumerator SpawnRoutine()
     {
         Spawn();
         yield return new WaitUntil(CharacterIsAlive);
@@ -53,10 +55,11 @@ public class PlayerManager : NetworkBehaviour
     [Command]
     public void CmdSpawn()
     {
-        Character characterInstance = Instantiate(character);
-        characterInstance.manager = this;
+        GameObject characterInstance = Instantiate(character);
 
         TeamBehaviour characterTeam = characterInstance.GetComponent<TeamBehaviour>();
         team.SpawnTeammate(characterTeam);
+
+        currentCharacter = characterInstance;
     }
 }

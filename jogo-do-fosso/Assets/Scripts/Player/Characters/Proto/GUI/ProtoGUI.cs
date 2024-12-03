@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class ProtoGUI : MonoBehaviour
 {
     [HideInInspector]
-    public Character proto;
+    public GameObject proto;
 
     public Image meleeBar;
     public Image rangedBar;
