@@ -5,7 +5,7 @@ using Mirror;
 
 public class ProtoSentry : CharacterSkill
 {
-    public SentryProjectile projectilePrefab;
+    public ProtoSentryProjectile projectilePrefab;
     public Transform projectileOrigin;
     public float aimRange;
     public LayerMask ignore;
@@ -58,7 +58,7 @@ public class ProtoSentry : CharacterSkill
     [Command]
     void Fire()
     {
-        SentryProjectile projectile = Instantiate(projectilePrefab, projectileOrigin.position, projectileOrigin.rotation);
+        ProtoSentryProjectile projectile = Instantiate(projectilePrefab, projectileOrigin.position, projectileOrigin.rotation);
 
         projectile.owner = this;
         team.SpawnTeammate(projectile.GetComponent<TeamBehaviour>());
