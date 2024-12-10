@@ -30,6 +30,7 @@ public class PlayerManager : NetworkBehaviour
 
     IEnumerator SpawnRoutine()
     {
+        yield return new WaitUntil(()=>{return team.team != TeamBehaviour.Team.undefined;});
         Spawn();
         yield return new WaitUntil(CharacterIsAlive);
         yield return new WaitUntil(CharacterIsDead);
