@@ -35,7 +35,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5417949671862298931}
@@ -216,7 +216,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 20
+  m_LinearDrag: 15
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -263,7 +263,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  maxHealth: 12
+  maxHealth: 90
   currentHealth: 0
 --- !u!114 &4902265646030851901
 MonoBehaviour:
@@ -280,13 +280,13 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  cooldown: 1
+  cooldown: 0.7
   cooldownProgress: 0
   canUse: 0
   team: {fileID: 0}
   projectilePrefab: {fileID: 3416529367793788124, guid: 71dca66dbc4e4744390b192535e027ee, type: 3}
   projectileOrigin: {fileID: 5417949671862298931}
-  aimRange: 8
+  aimRange: 7
   ignore:
     serializedVersion: 2
     m_Bits: 13568

@@ -201,7 +201,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  damage: 4
+  damage: 12
   speed: 20
   lifeTime: 0.4
   overrideSentryTargetLength: 5

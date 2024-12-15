@@ -336,7 +336,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 15
+  m_LinearDrag: 12.5
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -383,7 +383,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  maxHealth: 10
+  maxHealth: 120
   currentHealth: 0
 --- !u!114 &4902265646030851901
 MonoBehaviour:
@@ -400,13 +400,13 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  cooldown: 0.7
+  cooldown: 0.6
   cooldownProgress: 0
   canUse: 0
   team: {fileID: 0}
   projectilePrefab: {fileID: 6096906255878638186, guid: 14fcd7658fc024242a7103f8e9e8dfd7, type: 3}
   projectileOrigin: {fileID: 5295394710200853597}
-  aimRange: 6
+  aimRange: 8
   ignore:
     serializedVersion: 2
     m_Bits: 13568

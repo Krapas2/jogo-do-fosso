@@ -525,7 +525,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  maxHealth: 12
+  maxHealth: 120
   currentHealth: 12
 --- !u!114 &-3448187068477018330
 MonoBehaviour:
@@ -595,6 +595,9 @@ MonoBehaviour:
   canUse: 0
   team: {fileID: 0}
   range: 8
+  ignore:
+    serializedVersion: 2
+    m_Bits: 16128
 --- !u!114 &3693093015806852811
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -649,7 +652,7 @@ MonoBehaviour:
   syncDirection: 0
   syncMode: 0
   syncInterval: 0
-  cooldown: 1
+  cooldown: 0.5
   cooldownProgress: 0
   canUse: 0
   team: {fileID: 0}
@@ -675,9 +678,9 @@ MonoBehaviour:
   team: {fileID: 0}
   sentryLevels:
   - sentry: {fileID: 4902265646030851901, guid: 4f1ed9cb2f97b4343b1eecf049e8f6c9, type: 3}
-    cooldown: 1
-  - sentry: {fileID: 4902265646030851901, guid: 56cd59155da87ae478dabac0e066f4cc, type: 3}
-    cooldown: 2
-  - sentry: {fileID: 4902265646030851901, guid: 82c161006ca1ffe40b29cf759c4c0a77, type: 3}
     cooldown: 3
+  - sentry: {fileID: 4902265646030851901, guid: 56cd59155da87ae478dabac0e066f4cc, type: 3}
+    cooldown: 4
+  - sentry: {fileID: 4902265646030851901, guid: 82c161006ca1ffe40b29cf759c4c0a77, type: 3}
+    cooldown: 5
   currentSentry: {fileID: 0}

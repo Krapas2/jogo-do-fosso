@@ -24,7 +24,7 @@ public class ProtoSentrySpawner : CharacterSkill
     [HideInInspector]
     public ProtoSentry currentSentry;
     [SyncVar]
-    private int nextSentryLevel;
+    private int sentryLevel;
 
     protected override void Start()
     {
@@ -35,32 +35,28 @@ public class ProtoSentrySpawner : CharacterSkill
 
     void Update()
     {
+        if(!currentSentry){
+            ResetSentryStats();
+        }
+
         if(Input.GetButtonDown("Special") && canUse){
-            CmdPlaceSentry(connectionToClient);
-            StartCoroutine(ListenForSentryDeath());
+            if(!currentSentry){
+                CmdSpawnSentry();
+            } else if(sentryLevel < sentryLevels.Length) {
+                CmdUpgradeSentry();
+            }
             StartCoroutine(Cooldown());
         }
     }
 
     [Command]
-    void CmdPlaceSentry(NetworkConnectionToClient sender)
+    void CmdSpawnSentry()
     {
-        if(nextSentryLevel >= sentryLevels.Length){
-            return;
-        }
+        sentryLevel = 0;
+        Debug.Log(sentryLevel);
 
-        ProtoSentry sentryToSpawn = sentryLevels[nextSentryLevel].sentry;
-        cooldown = sentryLevels[nextSentryLevel].cooldown;
-        nextSentryLevel++;
-        
-        Vector3 positionToSpawn;
-
-        if(!currentSentry){
-            positionToSpawn = transform.position;
-        }else{
-            positionToSpawn = currentSentry.transform.position;
-            NetworkServer.Destroy(currentSentry.gameObject);
-        }
+        ProtoSentry sentryToSpawn = sentryLevels[sentryLevel].sentry;
+        Vector3 positionToSpawn = transform.position;
 
         ProtoSentry spawnedSentry = Instantiate(sentryToSpawn, positionToSpawn, Quaternion.identity);
         spawnedSentry.owner = this;
@@ -68,17 +64,30 @@ public class ProtoSentrySpawner : CharacterSkill
         team.SpawnTeammate(spawnedSentry.GetComponent<TeamBehaviour>());
 
         currentSentry = spawnedSentry;
+        cooldown = sentryLevels[sentryLevel].cooldown;
     }
 
-    IEnumerator ListenForSentryDeath()
+    [Command]
+    void CmdUpgradeSentry()
     {
-        yield return new WaitUntil(() => !currentSentry);
+        Debug.Log(sentryLevel);
+        sentryLevel = Mathf.Clamp(sentryLevel+1,0,sentryLevels.Length-1);
+        Debug.Log(sentryLevel);
+        ProtoSentry sentryToSpawn = sentryLevels[sentryLevel].sentry;
+        Vector3 positionToSpawn = currentSentry.transform.position;
 
-        ResetSentryStats();
+        ProtoSentry spawnedSentry = Instantiate(sentryToSpawn, positionToSpawn, Quaternion.identity);
+        spawnedSentry.owner = this;
+
+        NetworkServer.Destroy(currentSentry.gameObject);
+        team.SpawnTeammate(spawnedSentry.GetComponent<TeamBehaviour>());
+
+        currentSentry = spawnedSentry;
+        cooldown = sentryLevels[sentryLevel].cooldown;
     }
 
     void ResetSentryStats(){
         cooldown = sentryLevels[0].cooldown;
-        nextSentryLevel = 0;
+        sentryLevel = -1;
     }
 }

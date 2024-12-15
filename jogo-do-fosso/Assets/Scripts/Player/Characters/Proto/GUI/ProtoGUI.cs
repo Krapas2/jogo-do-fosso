@@ -28,6 +28,10 @@ public class ProtoGUI : MonoBehaviour
 
     void Update()
     {
+        if(!proto){
+            Destroy(gameObject);
+        }
+
         meleeBar.fillAmount = protoMelee.cooldownProgress / protoMelee.cooldown;
         rangedBar.fillAmount = protoRanged.cooldownProgress / protoRanged.cooldown;
         teleportBar.fillAmount = protoTeleport.cooldownProgress / protoTeleport.cooldown;
