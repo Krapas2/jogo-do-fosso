@@ -83,7 +83,14 @@ public class ProtoTeleport : CharacterSkill
         Vector3 sentryPosition = protoSentrySpawner.currentSentry.transform.position;
         Vector3 vectorFromSentry = Vector3.ClampMagnitude(position - sentryPosition, range);
 
-        Vector3 positionToSet = vectorFromSentry + sentryPosition;
+        RaycastHit2D lineOfSight = Physics2D.Linecast(sentryPosition, vectorFromSentry + sentryPosition, ignore.Inverse());
+        Vector3 positionToSet;
+
+        if(!lineOfSight){
+            positionToSet = vectorFromSentry + sentryPosition;
+        } else {
+            positionToSet = lineOfSight.point;
+        }
 
         transform.position = positionToSet;
     }
